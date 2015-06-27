@@ -1,9 +1,0 @@
-*.war
-kickerDb.properties
-kickerDb.script
-*.zip
-starter.jar
-target
-kickerDb.lck
-tmp
-build
