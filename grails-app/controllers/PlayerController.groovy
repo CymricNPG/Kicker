@@ -245,7 +245,7 @@ class PlayerController {
         }
         else {
             flash.message = "Player not found with id ${params.id}"
-            redirect(action:edit,id:params.id)
+            redirect(action:"edit",id:params.id)
         }
     }
 
@@ -263,7 +263,7 @@ class PlayerController {
 
         if(!player.hasErrors() && player.save()) {
             flash.message = "Player ${player.id} created"
-            redirect(action:show,id:player.id)
+            redirect(action:"show", id:player.id)
         }
         else {
             render(view:'create',model:[player:player])
