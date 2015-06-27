@@ -24,7 +24,7 @@
 			<img style="width: 10px; height: 57px;" alt="x"
 				src="${createLinkTo(dir:'images',file:'left_line.png')}"></td>
 			<td style="width: 90px; height: 47px;background-image: url(${ createLinkTo(dir : 'images', file : 'kicker_logo_line.png')})"><span class="menuButton"><a class="home"
-				href="${createLinkTo(file:'index.gsp')}">Home</a></span></td>
+				href="/">Home</a></span></td>
 			<td style="width: 90px; height: 47px;background-image: url(${ createLinkTo(dir : 'images', file : 'kicker_logo_line.png')})"><span class="menuButton"><g:link class="list"
 				action="list" controller="player">Players</g:link></span></td>
 			<td style="width: 90px; height: 47px;background-image: url(${ createLinkTo(dir : 'images', file : 'kicker_logo_line.png')})"><span class="menuButton"><g:link class="list"
