@@ -6,7 +6,8 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-		 "/changelog"(view: "/changelog")  
+		 "/changelog"(view: "/changelog")
+		 "/index" (view: "/index")
         "/"(view:"/index")
         "500"(view:'/error')
         "404"(view:'/notFound')
