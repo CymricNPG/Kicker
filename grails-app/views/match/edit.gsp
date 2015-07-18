@@ -1,9 +1,10 @@
-  
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="layout" content="main" />
         <title>Edit a Match</title>
+        <g:render template="/match/user_add" />
     </head>
     <body>
         <g:render template="/match/match_menu" />

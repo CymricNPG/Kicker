@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see http://www.gnu.org/licenses/.
- */  
+ */
  class Player {
 	String name
 	Integer matchesWon = 0
@@ -23,7 +23,7 @@
 	Integer score = 0
 	String password = ""
 	Double elo = 1000
-	
+
 	/**
 	 * tokenizes the name and shortens all nouns after the first one
 	 */
@@ -37,9 +37,9 @@
         }
 	    return sname
 	}
-	
+
 	static constraints = {
-        name(size:5..40, blank:false, unique:true)
+        name(size:1..12, blank:false, unique:true)
         matchesWon(nullable:false)
         matchesLost(nullable:false)
         matchesDraw(nullable:false)

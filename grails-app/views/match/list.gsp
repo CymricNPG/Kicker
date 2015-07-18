@@ -1,4 +1,4 @@
-  
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -15,7 +15,7 @@
             <div class="list">
                 <table class="normal" >
                     <thead>
-                        <tr> 
+                        <tr>
                    	        <g:sortableColumn property="id" title="Id"/>
                    	        <g:sortableColumn property="date" title="Date"/>
                          	<th> Team 1 </th>
@@ -30,9 +30,9 @@
                     <tbody>
                     <g:each in="${matchList}" status="i" var="match">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
+
                             <td><g:link action="show" id="${match.id}">${match.id?.encodeAsHTML()}</g:link></td>
-                        
+
                             <td>${match.date?.encodeAsHTML()}</td>
                             <td class="${match.win(1)}">
 	                             <g:each in="${match.team1Players}" var="player">
@@ -51,8 +51,8 @@
 						  <td>${match.game1Team1}:${match.game1Team2}</td>
 						  <td>${match.game2Team1}:${match.game2Team2}</td>
 						  <td>${match.game3Team1}:${match.game3Team2}</td>
-						  <td>${match.result}</td>    
-						   <td>${String.format("%.3f",match.elo)}</td>                         
+						  <td>${match.result}</td>
+						   <td>${String.format("%.3f",match.elo)}</td>
                         </tr>
                     </g:each>
                     </tbody>
@@ -61,6 +61,7 @@
             <div class="paginateButtons">
                 <g:paginate total="${Match.count()}" />
             </div>
+            If ELO is > 0.5, Team 1 was favorite.
         </div>
     </body>
 </html>

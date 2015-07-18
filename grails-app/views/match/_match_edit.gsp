@@ -18,6 +18,7 @@
 							(Startcolor blue)</td>
 							<td valign='top' bgcolor='lightblue'
 								class='${hasErrors(bean:match,field:'team1Players','errors')}'>
+
 							<g:select name="matchTeam1Players" from="${Player.listOrderByName()}"
 								optionValue="name" optionKey="id" multiple="true"
 								value="${match?.team1Players?.id}" /></td>

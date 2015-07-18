@@ -4,6 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="layout" content="main" />
 <title>Create a Match</title>
+<link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
+
+<g:render template="/match/user_add" />
+
 </head>
 <body>
 <g:render template="/match/match_menu" />
