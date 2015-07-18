@@ -7,6 +7,10 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
+<h2>3.1</h2>
+<ul>
+	<li>Switched to some fancy select for players.</li>
+</ul>
 <h2>3.0</h2>
 <ul>
 	<li>upgraded to grails 3.0.2</li>
