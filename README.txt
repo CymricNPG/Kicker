@@ -1,5 +1,5 @@
 A simple Kicker Management Application with GRAILS
-Version 3.0
+Version 3.1
 
 You can:
 - Enter new Player
