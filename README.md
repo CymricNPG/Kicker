@@ -20,40 +20,37 @@ Installation:
 
 Standalone:
 (standalone is currently not working with grails 3.0.2, use older versions of Kicker)
-- Checkout the distribution from sourceforge or uncompress Kicker-3.0.jar from Kicker-complete-3.0.7z
+- Checkout the distribution from github
 - start with: java -jar Kicker-3.0.jar
 - open with a web browser http://localhost:8080/
 
 Grails installed (build your own war):
-- Checkout the distribution from sourceforge or uncompress src.7z from Kicker-complete-3.0.7z
+- Checkout the distribution from github 
 - use "grails war" and deploy it on a application server (http://grails.org/Deployment)
 
 Existing Servlet Container:
-- download latest Kicker-complete-3.0.7z and uncompress it
-- inside the archive you can find the Kicker.war file
+- download latest Kicker-3.0.war 
+- rename it to Kicker.war 
 - deploy it on a container e.g. tomcat
   see http://grails.org/Deployment for more information, which containers are supported
-- Kicker.war uses as default database h2, but uses the wrong database file (see open issues)
+- Kicker.war uses as default database h2
 - Tomcat: You may increase the upload size, if installed through the Manager:
   http://maxrohde.com/2011/04/27/large-war-file-cannot-be-deployed-in-tomcat-7/
 
 Build:
 ------
-- Checkout with git: git clone git://git.code.sf.net/p/kicker/git kicker-git
+- Checkout with git: git clone https://github.com/CymricNPG/Kicker.git
 - "grails war" or "gradlew.bat -Dgrails.env=production assemble" (see more at http://grails.org/)
 
 Database:
 ---------
 - Installation in a web container
   - standard is a file based h2 database
-  - the default configuration is located in:
-      <tomcat directory>/webapps/Kicker/WEB-INF/classes/Kicker-config.properties
 
 For more information look in http://grails.org/doc/latest/guide/single.html#3.3%20The%20DataSource
 
 Open Issues:
 ------------
-- Wrong Database selection on tomcat (war deployment): https://github.com/grails/grails-core/issues/9043
 - generated batch file is invalid with: gradlew -Dgrails.env=production assemble
 
 License:

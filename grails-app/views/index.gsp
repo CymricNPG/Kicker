@@ -7,7 +7,7 @@
 <body>
 <div class="body">
 <h1>Welcome to Kicker</h1>
-Kicker is a hobby foosball management application. You can manage your players and the matches. 
+Kicker is a hobby foosball management application. You can manage your players and the matches.
 <h1>Help</h1>
 <p>In the main menu bar you have the following buttons:</p>
 <p>
@@ -30,14 +30,14 @@ Kicker is a hobby foosball management application. You can manage your players a
 </p>
 <hr/>
 <h1>How to start?</h1>
-Go to <g:link class="list" action="list" controller="player">Players</g:link> and create new players. 
+Go to <g:link class="list" action="list" controller="player">Players</g:link> and create new players.
 Go to <g:link class="list" action="list" controller="match">Matches</g:link> and add a new match.
 
 <h1><g:link url="${createLinkTo(file:'changelog')}">Changelog</g:link></h1>
 
 <hr/>
-The application is open source and hosted on 
-<A HREF="http://sourceforge.net/projects/kicker/"><IMG SRC="http://sourceforge.net/sflogo.php?group_id=9495&amp;type=1" NAME="Graphic2" ALT="SourceForge Logo" ALIGN=MIDDLE BORDER=0></A>. 
+The application is open source and hosted on
+<A HREF="https://github.com/CymricNPG/Kicker">GitHub</A>.
 </div>
 </body>
 </html>

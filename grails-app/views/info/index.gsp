@@ -17,7 +17,7 @@ certain conditions;
 <a href="http://www.gnu.org/licenses/gpl-3.0.html"> SHOW </a>
 <br/>
 The application is hosted on
-<A HREF="http://sourceforge.net/projects/kicker/"><IMG SRC="http://sourceforge.net/sflogo.php?group_id=9495&amp;type=1" NAME="Graphic2" ALT="SourceForge Logo" ALIGN=MIDDLE BORDER=0></A>.
+<A HREF="https://github.com/CymricNPG/Kicker">GitHub</A>.
 <h1>Application Info</h1>
 This application uses:
 <ul>
