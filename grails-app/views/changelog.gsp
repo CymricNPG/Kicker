@@ -11,7 +11,6 @@
 <ul>
 	<li>switched to some fancy select for players.</li>
 	<li>changed the size of names to 1..12 characters </li>
-	<li>upgraded to grails 3.0.3</li>
 	<li>moved to github</li>
 </ul>
 <h2>3.0</h2>
