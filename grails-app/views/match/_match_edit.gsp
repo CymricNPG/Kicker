@@ -71,16 +71,16 @@
 					<tbody>
 						<tr>
 							<th></th>
-							<th>Team&nbsp;1</th>
-							<th>Team&nbsp;2</th>
+							<th bgcolor='lightblue'>Team&nbsp;1</th>
+							<th bgcolor='lightpink'>Team&nbsp;2</th>
 						</tr>
 						<tr>
 							<th>Game&nbsp;1</th>
-							<td bgcolor='blue'
+							<td bgcolor='lightblue'
 								class='value ${hasErrors(bean:game,field:'game1Team1','errors')}'>
 							<input type="text" id='game1Team1' name='game1Team1'
 								value="${match?.game1Team1}" size="4" maxlength="2" /></td>
-							<td bgcolor='orange'
+							<td bgcolor='lightpink'
 								class='value ${hasErrors(bean:game,field:'game1Team2','errors')}'>
 							<input type="text" id='game1Team2' name='game1Team2'
 								value="${match?.game1Team2}" size="4" maxlength="2" /></td>
@@ -88,11 +88,11 @@
 
 						<tr>
 							<th>Game&nbsp;2</th>
-							<td bgcolor='orange'
+							<td bgcolor='lightblue'
 								class='value ${hasErrors(bean:game,field:'game2Team1','errors')}'>
 							<input type="text" id='game2Team1' name='game2Team1'
 								value="${match?.game2Team1}" size="4" maxlength="2" /></td>
-							<td bgcolor='blue'
+							<td bgcolor='lightpink'
 								class='value ${hasErrors(bean:game,field:'game2Team2','errors')}'>
 							<input type="text" id='game2Team2' name='game2Team2'
 								value="${match?.game2Team2}" size="4" maxlength="2" /></td>
@@ -101,11 +101,11 @@
 
 						<tr>
 							<th>Game&nbsp;3</th>
-							<td bgcolor='blue'
+							<td bgcolor='lightblue'
 								class='value ${hasErrors(bean:game,field:'game3Team1','errors')}'>
 							<input type="text" id='game3Team1' name='game3Team1'
 								value="${match?.game3Team1}" size="4" maxlength="2" /></td>
-							<td bgcolor='orange'
+							<td bgcolor='lightpink'
 								class='value ${hasErrors(bean:game,field:'game3Team2','errors')}'>
 							<input type="text" id='game3Team2' name='game3Team2'
 								value="${match?.game3Team2}" size="4" maxlength="2" /></td>
