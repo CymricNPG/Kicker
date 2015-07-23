@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see http://www.gnu.org/licenses/.
- */  
+ */
  class ScoreService {
 
     boolean transactional = false
@@ -27,7 +27,7 @@
 		players.each { player ->
 			player.elo = 1000
 			player.matchesWon = 0
-			player.matchesDraw = 0 
+			player.matchesDraw = 0
 			player.matchesLost = 0
 			player.score = 0
 			player.save()
@@ -36,16 +36,16 @@
 		results.each { match ->
 			calcElo(match)
 			match.save()
-		} 
+		}
 	}
-    
+
     /**
-     * returns the elo of a player in a particular game
+     * returns the elo of a player in a particular game without K Factor
      * @reurn 0 if player wasnt part of the game
      */
     def returnElo(Match match, Player player) {
         def elo = 0
-        match.team1Players.each { p -> 
+        match.team1Players.each { p ->
 			if(p.id == player.id) {
 			    if(match.result > 0) {
 	    			elo = 1 - match.elo
@@ -57,8 +57,8 @@
 	    			elo = 0.0 - match.elo
 	    		}
 			}
-		} 
-        match.team2Players.each { p -> 
+		}
+        match.team2Players.each { p ->
           	if(p.id == player.id) {
           	    if(match.result < 0) {
 	    			elo = 1 - (1-match.elo)
@@ -70,14 +70,21 @@
 	    			elo = 0.0 - (1-match.elo)
 	    		}
     		}
-      	}  
-      	def matchFactor = 1.0
-		if( Math.abs(match.result) == 1 ) {
-		    matchFactor = 0.75
-		}
-        return elo*matchFactor	
+      	}
+      	def matchFactor = calcMatchFactor(match.result)
+        return elo*matchFactor
     }
-    
+
+	def calcMatchFactor(matchresult) {
+    	// match factor (100% for draw, 75% for +/-1 matches (3 sets), 100% for +/-2 matches (2 sets)
+		if( Math.abs(matchresult) == 0 ) {
+		    return 1
+		}
+		if( Math.abs(matchresult) == 1 ) {
+		    return 0.75
+		}
+		return 1.0
+	}
     /**
      * calculate the elo of a match. Inserts all calculated values in the match object
      */
@@ -86,14 +93,14 @@
     	def rb = 0.0
     	def rac = 0
     	def rbc = 0
-    	match.team1Players.each { p -> 
+    	match.team1Players.each { p ->
   			ra += p.elo
   			rac++
-  		} 
-		match.team2Players.each { p -> 
+  		}
+		match.team2Players.each { p ->
       		rb += p.elo
       		rbc++
-      	} 
+      	}
       	// average of elos
  	    if(rac > 0 && rbc > 0) {
 	 	    ra = ra / (double) rac
@@ -101,13 +108,9 @@
 	      	// the match elo
 	    	match.elo = 1/( 1 + Math.pow(10.0, (rb-ra)/400.0)  )
     	}
-		
-		// match factor (75% for +/-1 matches, 100% for +/-2 matches
-		def matchFactor = 1.0
-		if( Math.abs(match.result) == 1 ) {
-		    matchFactor = 0.75
-		}
-	
+
+		def matchFactor = calcMatchFactor(match.result)
+
     	/* calculate player scores */
     	match.team1Players.each { p ->
     		def k = calcK(p)
@@ -146,20 +149,23 @@
 			p.save()
 		}
     }
-    /**
-     * calculates the facor k for a player
-     */
-	def calcK(p) {
+    def calcKGeneric(totalMatches, elo) {
 		def k = 0.0
-		if( (p.matchesDraw+p.matchesWon+p.matchesLost) < 30 ) {
+		if( totalMatches < 30 ) {
 			k = 25.0
 		} else {
-			if( p.elo < 2400 ) {
+			if( elo < 2400 ) {
 				k = 15.0
 			} else {
 				k = 10.0
 			}
 		}
 		return k
+    }
+    /**
+     * calculates the facor k for a player
+     */
+	def calcK(p) {
+		return calcKGeneric(p.matchesDraw+p.matchesWon+p.matchesLost, p.elo)
 	}
 }

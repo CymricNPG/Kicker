@@ -14,21 +14,21 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see http://www.gnu.org/licenses/.
- */  
- 
+ */
+
 import org.hibernate.*
 import org.apache.commons.logging.LogFactory
 
 class PlayerController {
-    
+
 	private static final log = LogFactory.getLog(this)
-	
+
 	def beforeInterceptor = [action:this.&checkUser,except:['help','login', 'doLogin', 'index','list','show','create', 'save']]
-    
-    def scoreService 
-    
+
+    def scoreService
+
     def SessionFactory sessionFactory
-    
+
     def index = { redirect(action:list,params:params) }
 
     // the delete, save and update actions only accept POST requests
@@ -40,7 +40,7 @@ class PlayerController {
 
 	def login = {
 	}
-    
+
     /**
      * logout a logged in user
      */
@@ -49,12 +49,12 @@ class PlayerController {
         session.user = null
         redirect(action:list)
     }
-    
+
     /**
      * help page
      */
     def help = {}
-    
+
     /**
      * checks if an user is logged in
      * @return false if user isn't logged in
@@ -66,7 +66,7 @@ class PlayerController {
 			return false
 		}
 	}
-	
+
 	def doLogin = {
 		def player = Player.findWhere(name:params['name'])
 		if(player?.password != null && params?.password != null && player.password.length() > 0
@@ -90,7 +90,7 @@ class PlayerController {
         }
         if(!params.sort) {
             params.sort = "name"
-        }  
+        }
         def players = null
         // this is a crap hack ... if the property is unknown I get a spring exception
         if(params.sort == 'id') {
@@ -116,13 +116,13 @@ class PlayerController {
 	def sortPlayers(field, order) {
 	    def players = null
 	    if(order == 'asc') {
-    	    players = Player.list( params ).sort{ p1,p2 -> 
+    	    players = Player.list( params ).sort{ p1,p2 ->
                 def p1Matches =  Math.max(p1.matchesWon+p1.matchesLost+p1.matchesDraw,1)
                 def p2Matches =  Math.max(p2.matchesWon+p2.matchesLost+p2.matchesDraw,1)
                 return p1.properties[field]/p1Matches <=> p2.properties[field]/p2Matches
             }
 	    } else {
-	        players = Player.list( params ).sort{ p2,p1 -> 
+	        players = Player.list( params ).sort{ p2,p1 ->
                 def p1Matches =  Math.max(p1.matchesWon+p1.matchesLost+p1.matchesDraw,1)
                 def p2Matches =  Math.max(p2.matchesWon+p2.matchesLost+p2.matchesDraw,1)
                 return p1.properties[field]/p1Matches <=> p2.properties[field]/p2Matches
@@ -135,14 +135,13 @@ class PlayerController {
 	 */
     def show = {
 	    def p = Player.get( params.id )
-	    def elos = [] 
+	    def elos = []
 	    def eloStart = 1000
 	    def count = 0
-	    def k = 25
 
 	    // get the list of matches for a user
 	    def c = Match.createCriteria()
-	    def matchList = c.list{ 	        
+	    def matchList = c.list{
 	        or {
 	            team1Players {
 	                eq("id", p.id)
@@ -150,22 +149,20 @@ class PlayerController {
 	            team2Players {
 	                eq("id", p.id)
 	            }
-            } 
+            }
 	    }.unique()
-	    
+
 	    // calculate the elo history
 	    matchList.each { match ->
 	        def elo = scoreService.returnElo(match, p)
 	        if(elo != 0) {
+	        	def k = scoreService.calcKGeneric(count, eloStart)
 	            eloStart += elo*k
 	            elos.add([count,eloStart])
 		        count++
-	            if(count >= 30) {
-		            k = 15
-		        }
 	        }
-	       
-    	}    
+    	}
+
 	    def maxMatches = matchList.size();
 
 	    // match list with paginate
@@ -173,7 +170,7 @@ class PlayerController {
 	    def sort = params?.sort != null ? params.sort : 'date'
 	    def orderX = params?.order != null ? params.order : 'desc'
 	    c = Match.createCriteria()
-	    matchList = c.list{ 	
+	    matchList = c.list{
 	        or {
 	            team1Players {
 	                eq("id", p.id)

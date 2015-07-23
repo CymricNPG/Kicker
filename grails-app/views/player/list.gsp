@@ -1,4 +1,4 @@
-  
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -15,15 +15,15 @@
             <div class="list">
                 <table class="normal">
                     <thead>
-                        <tr>                       
-                   	        <th>Id</th>                   	      
+                        <tr>
+                   	        <th>Id</th>
                         	<g:sortableColumn property="name" title="Name" />
                         	<g:sortableColumn property="score" title="Score" style="width: 40px" />
                         	<g:sortableColumn property="id" title="avg. Score" style="width: 70px" />
                         	<g:sortableColumn property="elo" title="ELO" style="width: 40px" />
-                   	        <g:sortableColumn property="matchesWon" title="Matches Won" />                        	
+                   	        <g:sortableColumn property="matchesWon" title="Matches Won" />
                    	        <g:sortableColumn property="matchesLost" title="Matches Lost" />
-                  	        <g:sortableColumn property="matchesDraw" title="Matches Draw" />                  
+                  	        <g:sortableColumn property="matchesDraw" title="Matches Draw" />
                         </tr>
                     </thead>
                     <tbody>
@@ -32,20 +32,20 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td><g:link action="show" id="${player.id}">${player.id?.encodeAsHTML()}</g:link></td>
                         	<td><g:link action="show" id="${player.id}">${player.name?.encodeAsHTML()}</g:link></td>
-                        	<g:if test="${nrOfMatches>9}">
+                        	<g:if test="${nrOfMatches>4}">
                         	<td>${String.format("%d",player.score)}</td>
                             <td>${String.format("%.2f",player.score/nrOfMatches)}</td>
                             <td>${String.format("%.0f",player.elo)}</td>
                             <td>${String.format("%.0f",player.matchesWon/nrOfMatches*100)}% </td>
                             <td>${String.format("%.0f",player.matchesLost/nrOfMatches*100)}% </td>
-                            <td>${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}% </td> 
-                            </g:if> 
+                            <td>${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}% </td>
+                            </g:if>
                             <g:else><td class="grey">player</td>
                             <td class="grey">has</td>
                             <td class="grey">less</td>
                             <td class="grey">than </td>
-                            <td class="grey"> 10  </td>
-                            <td class="grey">matches </td></g:else>              
+                            <td class="grey"> 5  </td>
+                            <td class="grey">matches </td></g:else>
                         </tr>
                     </g:each>
                     </tbody>
