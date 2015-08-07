@@ -1,6 +1,6 @@
 # Kicker
 A simple Kicker Management Application with GRAILS
-Version 3.1
+
 
 A simple web frontend based on grails for managing hobby foosball (tabletop football) games without fixed teams. Provides a minimum frontends to enter games and calculate the players elo.
 
@@ -25,12 +25,12 @@ Standalone:
 - open with a web browser http://localhost:8080/
 
 Grails installed (build your own war):
-- Checkout the distribution from github 
+- Checkout the distribution from github
 - use "grails war" and deploy it on a application server (http://grails.org/Deployment)
 
 Existing Servlet Container:
-- download latest Kicker-3.0.war 
-- rename it to Kicker.war 
+- download latest Kicker-3.0.war
+- rename it to Kicker.war
 - deploy it on a container e.g. tomcat
   see http://grails.org/Deployment for more information, which containers are supported
 - Kicker.war uses as default database h2

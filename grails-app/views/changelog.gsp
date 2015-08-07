@@ -7,6 +7,11 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
+<h2>3.2</h2>
+<ul>
+	<li>upgraded to grails 3.0.4</li>
+	<li>fixed elo calculation</li>
+</ul>
 <h2>3.1</h2>
 <ul>
 	<li>switched to some fancy select for players.</li>
