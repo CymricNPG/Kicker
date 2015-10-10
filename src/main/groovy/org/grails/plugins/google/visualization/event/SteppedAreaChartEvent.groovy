@@ -18,7 +18,7 @@ import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 
 /**
- * Available events for visualization "Stepped Area"
+ * Available events for org.grails.plugins.google.visualization "Stepped Area"
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */

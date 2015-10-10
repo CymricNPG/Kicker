@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
 
 /**
- * Available events for visualization "Table"
+ * Available events for org.grails.plugins.google.visualization "Table"
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */

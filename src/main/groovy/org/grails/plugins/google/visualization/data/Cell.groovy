@@ -18,7 +18,7 @@ package org.grails.plugins.google.visualization.data
  * Cell input value
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
- * @see <a href="http://code.google.com/apis/visualization/documentation/reference.html#cell_object">Google Cell Object</a>
+ * @see <a href="http://code.google.com/apis/org.grails.plugins.google.visualization/documentation/reference.html#cell_object">Google Cell Object</a>
  */
 class Cell {
     def value

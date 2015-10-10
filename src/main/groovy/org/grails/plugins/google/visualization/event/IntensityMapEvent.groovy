@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
 
 /**
- * Available events for visualization "Intensity Map"
+ * Available events for org.grails.plugins.google.visualization "Intensity Map"
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */

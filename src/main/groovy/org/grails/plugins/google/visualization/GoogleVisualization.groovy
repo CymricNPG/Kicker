@@ -84,8 +84,8 @@ enum GoogleVisualization {
         def googleVisualization = googleVisualizations[packageName]
 
         if(googleVisualization == null) {
-            log.error "Unknown Google visualization: ${packageName}"
-            throw new IllegalArgumentException('Unknown Google visualization')
+            log.error "Unknown Google org.grails.plugins.google.visualization: ${packageName}"
+            throw new IllegalArgumentException('Unknown Google org.grails.plugins.google.visualization')
         }
 
         googleVisualization

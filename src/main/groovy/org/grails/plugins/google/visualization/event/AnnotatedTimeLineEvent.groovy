@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
 
 /**
- * Available events for visualization "Annotated Time Line"
+ * Available events for org.grails.plugins.google.visualization "Annotated Time Line"
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */

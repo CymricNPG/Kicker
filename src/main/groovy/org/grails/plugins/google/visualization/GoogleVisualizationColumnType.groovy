@@ -15,7 +15,7 @@
 package org.grails.plugins.google.visualization
 
 /**
- * Google visualization column data types
+ * Google org.grails.plugins.google.visualization column data types
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */

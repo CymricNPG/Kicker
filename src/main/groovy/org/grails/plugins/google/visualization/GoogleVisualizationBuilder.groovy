@@ -24,8 +24,8 @@ import org.grails.plugins.google.visualization.util.ConfigOptionRendererUtil
 import org.grails.plugins.google.visualization.util.DateUtil
 
 /**
- * Google visualization builder. Takes in all passed in taglib attributes and knows how to prepare/render the data
- * for the visualization.
+ * Google org.grails.plugins.google.visualization builder. Takes in all passed in taglib attributes and knows how to prepare/render the data
+ * for the org.grails.plugins.google.visualization.
  *
  * @author <a href='mailto:benjamin.muschko@gmail.com'>Benjamin Muschko</a>
  */
@@ -162,7 +162,7 @@ class GoogleVisualizationBuilder extends VisualizationBuilder {
      * @param dataType Data type
      * @param cell Cell
      * @return Rendered value
-     * @see <a href="http://code.google.com/apis/visualization/documentation/reference.html#cell_object">Google Cell Object</a>
+     * @see <a href="http://code.google.com/apis/org.grails.plugins.google.visualization/documentation/reference.html#cell_object">Google Cell Object</a>
      */
     def renderCellValue(dataType, cell) {
         def cellProperties = []
