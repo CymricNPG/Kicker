@@ -19,9 +19,8 @@ Installation:
 -------------
 
 Standalone:
-(standalone is currently not working with grails 3.0.2, use older versions of Kicker)
 - Checkout the distribution from github
-- start with: java -jar Kicker-3.0.jar
+- start with: java -jar Kicker-<version>.jar
 - open with a web browser http://localhost:8080/
 
 Grails installed (build your own war):
@@ -29,12 +28,12 @@ Grails installed (build your own war):
 - use "grails war" and deploy it on a application server (http://grails.org/Deployment)
 
 Existing Servlet Container:
-- download latest Kicker-3.0.war
+- download latest war
 - rename it to Kicker.war
 - deploy it on a container e.g. tomcat
   see http://grails.org/Deployment for more information, which containers are supported
 - Kicker.war uses as default database h2
-- Tomcat: You may increase the upload size, if installed through the Manager:
+- Tomcat: You may increase the upload size, if installed with the Manager:
   http://maxrohde.com/2011/04/27/large-war-file-cannot-be-deployed-in-tomcat-7/
 
 Build:
@@ -48,10 +47,6 @@ Database:
   - standard is a file based h2 database
 
 For more information look in http://grails.org/doc/latest/guide/single.html#3.3%20The%20DataSource
-
-Open Issues:
-------------
-- generated batch file is invalid with: gradlew -Dgrails.env=production assemble
 
 License:
 --------
