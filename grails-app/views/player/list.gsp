@@ -16,11 +16,10 @@
                 <table class="normal">
                     <thead>
                         <tr>
-                   	        <th>Id</th>
                         	<g:sortableColumn property="name" title="Name" />
                         	<g:sortableColumn property="score" title="Score" style="width: 40px" />
                         	<g:sortableColumn property="id" title="avg. Score" style="width: 70px" />
-                        	<g:sortableColumn property="elo" title="ELO" style="width: 40px" />
+                        	<g:sortableColumn property="elo" title="ELO" style="width: 40px"/>
                    	        <g:sortableColumn property="matchesWon" title="Matches Won" />
                    	        <g:sortableColumn property="matchesLost" title="Matches Lost" />
                   	        <g:sortableColumn property="matchesDraw" title="Matches Draw" />
@@ -28,13 +27,12 @@
                     </thead>
                     <tbody>
                     <g:each in="${playerList}" status="i" var="player">
-                    	<g:set var="nrOfMatches" value="${Math.max(player.matchesWon+player.matchesLost+player.matchesDraw,1)}" />
+                    	<g:set var="nrOfMatches" value="${Math.max(player.totalMatches(), 1)}" />
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                            <td><g:link action="show" id="${player.id}">${player.id?.encodeAsHTML()}</g:link></td>
                         	<td><g:link action="show" id="${player.id}">${player.name?.encodeAsHTML()}</g:link></td>
                         	<g:if test="${nrOfMatches>4}">
                         	<td>${String.format("%d",player.score)}</td>
-                            <td>${String.format("%.2f",player.score/nrOfMatches)}</td>
+                            <td>${String.format("%.2f",player.scoreAVG())}</td>
                             <td>${String.format("%.0f",player.elo)}</td>
                             <td>${String.format("%.0f",player.matchesWon/nrOfMatches*100)}% </td>
                             <td>${String.format("%.0f",player.matchesLost/nrOfMatches*100)}% </td>

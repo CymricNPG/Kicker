@@ -16,7 +16,6 @@
                 <table class="normal" >
                     <thead>
                         <tr>
-                   	        <g:sortableColumn property="id" title="Id"/>
                    	        <g:sortableColumn property="date" title="Date"/>
                          	<th> Team 1 </th>
                          	<th> Team 2 </th>
@@ -30,10 +29,7 @@
                     <tbody>
                     <g:each in="${matchList}" status="i" var="match">
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-
-                            <td><g:link action="show" id="${match.id}">${match.id?.encodeAsHTML()}</g:link></td>
-
-                            <td>${match.date?.encodeAsHTML()}</td>
+                            <td><g:link action="show" id="${match.id}">${match.date?.encodeAsHTML()}</g:link></td>
                             <td class="${match.win(1)}">
 	                             <g:each in="${match.team1Players}" var="player">
 	                             <g:link controller="player" action="show" id="${player.id}">

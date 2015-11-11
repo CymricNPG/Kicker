@@ -7,6 +7,19 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
+<h2>3.4</h2>
+<ul>
+	<li>upgraded to grails 3.0.9</li>
+	<li>fixed elo graph </li>
+	<li>removed id from matches and players tables </li>
+	<li>players table sorted by elo </li>
+</ul>
+
+<h2>3.3</h2>
+<ul>
+	<li>upgraded to grails 3.0.8</li>
+</ul>
+
 <h2>3.2</h2>
 <ul>
 	<li>upgraded to grails 3.0.4</li>

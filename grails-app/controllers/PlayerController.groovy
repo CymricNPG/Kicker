@@ -1,6 +1,6 @@
 /**
  *   A simple foosball management application
- *   Copyright (C) 2008 Roland Spatzenegger
+ *   Copyright (C) 2015 Roland Spatzenegger
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -86,20 +86,16 @@ class PlayerController {
 	 */
     def list = {
         if(!params.max) {
-         	params.max = 20
+         	params.max = 40
         }
         if(!params.sort) {
-            params.sort = "name"
+            params.sort = "elo"
+        }
+        if(!params.order) {
+	        params.order = "desc"
         }
         def players = null
-        // this is a crap hack ... if the property is unknown I get a spring exception
-        if(params.sort == 'id') {
-            if( params.order == 'asc') {
-                players = sortPlayers('score','asc')
-            } else {
-                players = sortPlayers('score','dsc')
-            }
-        } else if(params.sort == 'matchesWon' || params.sort == 'matchesLost' || params.sort == 'matchesDraw' ) {
+        if(params.sort == 'matchesWon' || params.sort == 'matchesLost' || params.sort == 'matchesDraw') {
             if( params.order == 'asc') {
                 players = sortPlayers(params.sort,'asc')
             } else {
@@ -150,6 +146,8 @@ class PlayerController {
 	                eq("id", p.id)
 	            }
             }
+            distinct("id")
+            order("id", "asc")
 	    }.unique()
 
 	    // calculate the elo history

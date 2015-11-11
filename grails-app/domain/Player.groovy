@@ -1,6 +1,6 @@
 /**
  *   A simple foosball management application
- *   Copyright (C) 2008 Roland Spatzenegger
+ *   Copyright (C) 2015 Roland Spatzenegger
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -23,6 +23,18 @@
 	Integer score = 0
 	String password = ""
 	Double elo = 1000
+
+	def scoreAVG() {
+		def matches = totalMatches()
+		if(matches == 0) {
+			return 0
+		}
+		return score / matches
+	}
+
+	def totalMatches() {
+		return matchesWon+matchesLost+matchesDraw
+	}
 
 	/**
 	 * tokenizes the name and shortens all nouns after the first one

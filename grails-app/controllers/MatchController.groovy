@@ -1,6 +1,6 @@
 /**
  *   A simple foosball management application
- *   Copyright (C) 2008 Roland Spatzenegger
+ *   Copyright (C) 2015 Roland Spatzenegger
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

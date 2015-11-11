@@ -20,15 +20,23 @@
 
 		<tr class="prop">
 			<td valign="top" class="name">Id:</td>
-
 			<td valign="top" class="value">${player.id}</td>
-
 		</tr>
 		<tr class="prop">
 			<td valign="top" class="name">Name:</td>
-
 			<td valign="top" class="value">${player.name}</td>
-
+		</tr>
+		<tr class="prop">
+			<td valign="top" class="name">ELO:</td>
+			<td valign="top" class="value">${player.elo}</td>
+		</tr>
+		<tr class="prop">
+			<td valign="top" class="name">Average Score:</td>
+			<td valign="top" class="value">${player.scoreAVG()}</td>
+		</tr>
+		<tr class="prop">
+			<td valign="top" class="name">Total Matches:</td>
+			<td valign="top" class="value">${player.totalMatches()}</td>
 		</tr>
 		<tr class="prop">
 			<td valign="top" class="name">Matches Draw:</td>
@@ -39,7 +47,6 @@
 			<g:else>
 				<td valign="top" class="value">${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}%</td>
 			</g:else>
-
 		</tr>
 
 		<tr class="prop">
@@ -51,7 +58,6 @@
 			<g:else>
 				<td valign="top" class="value">${String.format("%.0f",player.matchesLost/nrOfMatches*100)}%</td>
 			</g:else>
-
 		</tr>
 
 		<tr class="prop">
@@ -83,7 +89,7 @@
 <div id="ELOChart"></div>
 
 
-	 
+
 <div class="buttons"><g:form controller="player">
 	<input type="hidden" name="id" value="${player?.id}" />
 	<g:if
@@ -122,8 +128,8 @@
 
 				<td>${match.date?.encodeAsHTML()}</td>
 				<td class="${match.win(1)}">
-				<g:each in="${match.team1Players}" var="playerX">	
-					<g:if test="${playerX.id == player.id}">	
+				<g:each in="${match.team1Players}" var="playerX">
+					<g:if test="${playerX.id == player.id}">
 						<div class="user">
 							<g:link controller="player" action="show" id="${playerX.id}"> ${playerX.name} </g:link>
 						</div>
@@ -136,8 +142,8 @@
 				</g:each>
 				</td>
 				<td class="${match.win(2)}"><g:each in="${match.team2Players}"
-					var="playerX">				
-					<g:if test="${playerX.id == player.id}">	
+					var="playerX">
+					<g:if test="${playerX.id == player.id}">
 						<div class="user">
 							<g:link controller="player" action="show" id="${playerX.id}"> ${playerX.name} </g:link>
 						</div>
