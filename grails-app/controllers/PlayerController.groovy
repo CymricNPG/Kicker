@@ -96,16 +96,30 @@ class PlayerController {
         }
         def players = null
         if(params.sort == 'matchesWon' || params.sort == 'matchesLost' || params.sort == 'matchesDraw') {
-            if( params.order == 'asc') {
-                players = sortPlayers(params.sort,'asc')
-            } else {
-                players = sortPlayers(params.sort,'dsc')
-            }
+            players = sortPlayers(params.sort,  params.order)
+        } else if(params.sort == 'avgScore') {
+         	players = sortPlayersAvgScore(params.order)
         } else {
             players = Player.list( params )
         }
         [ playerList: players ]
     }
+
+    def sortPlayersAvgScore(order) {
+	    def players = null
+	    if(order == 'asc') {
+    	    players = Player.list().sort{ p1,p2 ->
+                return p1.scoreAVG() <=> p2.scoreAVG()
+            }
+	    } else {
+	        players = Player.list().sort{ p2,p1 ->
+                return p1.scoreAVG() <=> p2.scoreAVG()
+            }
+	    }
+	    return players
+	}
+
+
     /**
      * sort by matchesWon,matchesLost,matchesDraw
      */

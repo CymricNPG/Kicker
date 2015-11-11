@@ -18,7 +18,7 @@
                         <tr>
                         	<g:sortableColumn property="name" title="Name" />
                         	<g:sortableColumn property="score" title="Score" style="width: 40px" />
-                        	<g:sortableColumn property="id" title="avg. Score" style="width: 70px" />
+                        	<g:sortableColumn property="avgScore" title="avg. Score" style="width: 70px" />
                         	<g:sortableColumn property="elo" title="ELO" style="width: 40px"/>
                    	        <g:sortableColumn property="matchesWon" title="Matches Won" />
                    	        <g:sortableColumn property="matchesLost" title="Matches Lost" />

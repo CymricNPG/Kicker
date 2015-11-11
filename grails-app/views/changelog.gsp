@@ -13,6 +13,7 @@
 	<li>fixed elo graph </li>
 	<li>removed id from matches and players tables </li>
 	<li>players table sorted by elo </li>
+	<li>fixed sorting of average score </li>
 </ul>
 
 <h2>3.3</h2>
