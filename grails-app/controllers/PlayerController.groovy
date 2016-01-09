@@ -47,7 +47,7 @@ class PlayerController {
 
     def logout = {
         session.user = null
-        redirect(action:list)
+        redirect(controller:'match',action:'list')
     }
 
     /**
