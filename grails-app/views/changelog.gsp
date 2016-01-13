@@ -7,6 +7,12 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
+<h2>3.5</h2>
+<ul>
+    <li>upgraded to grails 3.0.11</li>
+    <li>correct logout action added </li>
+    <li>new goal statistics added</li>
+</ul>
 <h2>3.4</h2>
 <ul>
 	<li>upgraded to grails 3.0.9</li>
