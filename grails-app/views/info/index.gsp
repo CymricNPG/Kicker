@@ -22,7 +22,7 @@ The application is hosted on
 This application uses:
 <ul>
 <li><a href="http://grails.codehaus.org/">
-<img width="140px" height="42px" src="${createLinkTo(dir:'images',file:'grails_logo.jpg')}"align="middle" alt="Grails" BORDER="0"/>
+<img width="140px" height="42px" src="${resource(dir:'images',file:'grails_logo.jpg')}"align="middle" alt="Grails" BORDER="0"/>
 </a> </li>
 <li> <a href="https://developers.google.com/chart/interactive/docs/index">Google Visualization API</a>.</li>
 <li> <a href="https://github.com/vicb/bsmSelect"> BSM Select </a></li>

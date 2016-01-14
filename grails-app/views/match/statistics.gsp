@@ -125,27 +125,6 @@ at least ${minMatches} matches).
 		</td>
 	</tr>
 </table>
-<p />
-<div>
-<table class="normal">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Goals per Round</th>
-		</tr>
-	</thead>
-	<tbody>
-		<g:each in="${players}" status="x" var="pline">
-			<tr>
-				<td><b> <g:link controller="player" action="show" id="${players[x]}">
-			            ${Player.get(players[x])?.shortName()}</g:link>
-			    </b></td>
-			    <td> ${String.format("%.2f",goalsRatio[x])} </td>
-			</tr>
-		</g:each>
-	</tbody>
-</table>
-</div>
 
 </div>
 

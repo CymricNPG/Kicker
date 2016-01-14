@@ -166,6 +166,12 @@ input:focus,select:focus,textarea:focus {
 	padding-left: 25px;
 }
 
+.menuButton a.help {
+	background: url(../images/skin/information.png) center left no-repeat;
+	color: #333;
+	padding-left: 25px;
+}
+
 .menuButton a.save {
 	background: url(../images/skin/database_save.png) center left no-repeat;
 	color: #333;

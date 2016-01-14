@@ -48,19 +48,6 @@ class MatchController {
      */
     def help = {}
 
-    def toInt(value) {
-        return value ?: 0
-    }
-
-    def toInt01(value1, value2) {
-        if (value1 != null && value1 > 0) {
-            return 1
-        }
-        if (value2 != null && value2 > 0) {
-            return 1
-        }
-        return 0
-    }
     /**
      * shows player and match statistics
      */
@@ -71,42 +58,28 @@ class MatchController {
         //best partner statistics
         def partnersWon = [:]
         def partnersLost = [:]
-        def goalsScored = [:]
-        def roundsPlayed = [:]
+
         Match.list().each { match ->
-            def goals1 = (match.game1Team1 ?: 0) + (match.game2Team1 ?: 0) + (match.game3Team1 ?: 0)
-            def goals2 = (match.game1Team2 ?: 0) + (match.game2Team2 ?: 0) + (match.game3Team2 ?: 0)
-            def rounds = toInt01(match.game1Team1, match.game1Team2) +
-                    toInt01(match.game2Team1, match.game2Team2) +
-                    toInt01(match.game3Team1, match.game3Team2)
-            match.team1Players.each { p ->
-                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals1
-                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
-            }
-            match.team2Players.each { p ->
-                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals2
-                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
-            }
 
             if (match.result > 0) {
                 blue++
                 if (match.team1Players.size() == 2) {
                     def id = getPartnerString(match.team1Players);
-                    partnersWon[id] = partnersWon[id] == null ? 1 : partnersWon[id] + 1;
+                    partnersWon[id] = (partnersWon[id] ?: 0) + 1;
                 }
                 if (match.team2Players.size() == 2) {
                     def id = getPartnerString(match.team2Players);
-                    partnersLost[id] = partnersLost[id] == null ? 1 : partnersLost[id] + 1;
+                    partnersLost[id] = (partnersLost[id] ?: 0) + 1;
                 }
             } else {
                 red++
                 if (match.team2Players.size() == 2) {
                     def id = getPartnerString(match.team2Players);
-                    partnersWon[id] = partnersWon[id] == null ? 1 : partnersWon[id] + 1;
+                    partnersWon[id] = (partnersWon[id] ?:0 ) + 1;
                 }
                 if (match.team1Players.size() == 2) {
                     def id = getPartnerString(match.team1Players);
-                    partnersLost[id] = partnersLost[id] == null ? 1 : partnersLost[id] + 1;
+                    partnersLost[id] = (partnersLost[id] ?: 0) + 1;
                 }
             }
         }
@@ -114,21 +87,16 @@ class MatchController {
         def partnerArray = []
         def players = []
         def partnersScore = [:]
-        def goalsRatio = []
         def minMatches = 4
         Player.listOrderByName().each { p1 ->
             def line = []
             players << p1.id
-            if (goalsScored[p1.id] != null) {
-                goalsRatio << goalsScored[p1.id] / roundsPlayed[p1.id]
-            } else {
-                goalsRatio << 0
-            }
+
             Player.listOrderByName().each { p2 ->
                 def id = p1.id + ":" + p2.id
                 //println id +"/"+partnersWon[id]+"/"+partnersLost[id]
-                def won = partnersWon[id] != null ? partnersWon[id] : 0
-                def lost = partnersLost[id] != null ? partnersLost[id] : 0
+                def won = partnersWon[id] ?: 0
+                def lost = partnersLost[id] ?: 0
                 def allGames = won + lost
                 def r = allGames != 0 ? (won - lost) * 10 / allGames : 0
                 if ((won + lost) >= minMatches) {
@@ -141,11 +109,13 @@ class MatchController {
             partnerArray << line
         }
         // get most successful teams
-        def redblueGames = (red + blue) != 0 ? red + blue : 1
-        return [red          : red / redblueGames * 100, blue: blue / redblueGames * 100,
+        def redblue = red + blue
+        def redPercent = redblue == 0 ? 0 : red * 100 / redblue
+        def bluePercent = redblue == 0 ? 0 : blue * 100 / redblue
+
+        return [red          : redPercent, blue: bluePercent,
                 partnerArray : partnerArray, players: players,
-                partnersScore: partnersScore, minMatches: minMatches,
-                goalsRatio   : goalsRatio]
+                partnersScore: partnersScore, minMatches: minMatches]
     }
     /**
      * helper method for statistics
