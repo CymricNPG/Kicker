@@ -171,7 +171,7 @@ class MatchController {
      * start recalculation of the elos
      */
     def recalc = {
-        scoreService.recalcMatchScore()
+        scoreService.recalcAndUpdateElo()
         flash.message = "ELO of all Players recalculated."
         redirect(action: "list")
     }

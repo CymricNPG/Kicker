@@ -1,3 +1,5 @@
+import org.apache.commons.logging.LogFactory
+
 /**
  *   A simple foosball management application
  *   Copyright (C) 2015 Roland Spatzenegger
@@ -17,6 +19,7 @@
  */
 class ScoreService {
 
+    private static final log = LogFactory.getLog(this)
     boolean transactional = false
 
     /**
@@ -43,6 +46,7 @@ class ScoreService {
      * returns the elo of a player in a particular game without K Factor
      * @reurn 0 if player wasnt part of the game
      */
+
     def returnElo(Match match, Player player) {
         def elo = 0
         match.team1Players.each { p ->
@@ -75,6 +79,7 @@ class ScoreService {
         return elo * matchFactor
     }
 
+
     def calcMatchFactor(matchresult) {
         // match factor (100% for draw, 75% for +/-1 matches (3 sets), 100% for +/-2 matches (2 sets)
         if (Math.abs(matchresult) == 0) {
@@ -85,6 +90,7 @@ class ScoreService {
         }
         return 1.0
     }
+
     /**
      * calculate the elo of a match. Inserts all calculated values in the match object
      */
@@ -145,22 +151,114 @@ class ScoreService {
     }
 
     def calcKGeneric(totalMatches, elo) {
-        def k = 0.0
         if (totalMatches < 30) {
-            k = 25.0
+            return 25.0
         } else {
             if (elo < 2400) {
-                k = 15.0
+                return 15.0
             } else {
-                k = 10.0
+                return 10.0
             }
         }
-        return k
     }
+
     /**
      * calculates the facor k for a player
      */
     def calcK(p) {
         return calcKGeneric(p.matchesDraw + p.matchesWon + p.matchesLost, p.elo)
+    }
+
+    def recalcAndUpdateElo() {
+        def result = recalculateElo()
+        Match.list().each { match ->
+            match.elo = result.matchElos[match.id]
+            match.save()
+        }
+        Player.list().each { player ->
+            player.elo = result.playerElos[player.id]
+            player.score = result.playerScores[player.id]
+            player.matchesWon = result.matchesWon[player.id]
+            player.matchesDraw = result.matchesDraw[player.id]
+            player.matchesLost = result.matchesLost[player.id]
+            player.save()
+        }
+    }
+
+    // calculate all match and player elos, return as maps
+    def recalculateElo() {
+        def result = new ScoreResult()
+        Player.list().each { player ->
+            result.playerElos[player.id] = 1000.0
+            result.playerScores[player.id] = 0
+            result.matchesWon[player.id] = 0
+            result.matchesDraw[player.id] = 0
+            result.matchesLost[player.id] = 0
+            result.eloHistory[player.id] = [:]
+        }
+        log.info("Start calculating elos")
+        Match.listOrderById().each { match ->
+            calcElo(match, result)
+        }
+        return result
+    }
+
+    /**
+     * calculate the elo of a match. Inserts all calculated values in the match object
+     */
+    def calcElo(match, result) {
+        def ra = 0.0
+        def rb = 0.0
+        def rac = 0
+        def rbc = 0
+        match.team1Players.each { p ->
+            ra += result.playerElos[p.id]
+            rac++
+        }
+        match.team2Players.each { p ->
+            rb += result.playerElos[p.id]
+            rbc++
+        }
+
+        if (rac == 0 || rbc == 0) {
+            log.warn("Match:" + match.id + " is inconsistent. No players set.")
+            return
+        }
+        ra = ra / (double) rac
+        rb = rb / (double) rbc
+        result.matchElos[match.id] = 1 / (1 + Math.pow(10.0, (rb - ra) / 400.0))
+
+        /* calculate player scores */
+        match.team1Players.each { p ->
+            updateResult(match, result, p, -1)
+            result.playerScores[p.id] += match.scoreTeam1
+        }
+        match.team2Players.each { p ->
+            updateResult(match, result, p, 1)
+            result.playerScores[p.id] += match.scoreTeam2
+        }
+    }
+
+    def updateResult(match, result, player, side) {
+        def pid = player.id
+        def totalGames = result.matchesDraw[pid] + result.matchesWon[pid] + result.matchesLost[pid]
+        def k = calcKGeneric(totalGames, result.playerElos[pid]) * calcMatchFactor(match.result)
+        def fac = 0.0
+        def elo = result.matchElos[match.id]
+        if (match.result * side < 0) {
+            result.matchesWon[pid]++
+            fac = k * (1.0 - elo)
+        }
+        if (match.result == 0) {
+            result.matchesDraw[pid]++
+            fac = +k * (0.5 - elo)
+        }
+        if (match.result * side > 0) {
+            result.matchesLost[pid]++
+            fac = k * (0.0 - elo)
+        }
+        result.playerElos[pid] += fac
+        result.eloHistory[pid][match.id] = result.playerElos[pid]
+        //log.info "Match," + match.date.toString() + ",Player," + player.name.toString() + ",Fac," + fac + ",Elo," + result.playerElos[pid]
     }
 }

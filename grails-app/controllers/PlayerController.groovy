@@ -141,34 +141,30 @@ class PlayerController {
      */
     def show = {
         def p = Player.get(params.id)
+        def pid = p.id
         def elos = []
-        def eloStart = 1000
-        def count = 0
 
         // get the list of matches for a user
         def c = Match.createCriteria()
         def matchList = c.list {
             or {
                 team1Players {
-                    eq("id", p.id)
+                    eq("id", pid)
                 }
                 team2Players {
-                    eq("id", p.id)
+                    eq("id", pid)
                 }
             }
             distinct("id")
             order("id", "asc")
         }.unique()
-
+        def result = scoreService.recalculateElo()
         // calculate the elo history
+        elos.add([0, 1000])
+        def count = 1
         matchList.each { match ->
-            def elo = scoreService.returnElo(match, p)
-            if (elo != 0) {
-                def k = scoreService.calcKGeneric(count, eloStart)
-                eloStart += elo * k
-                elos.add([count, eloStart])
-                count++
-            }
+            elos.add([count, result.eloHistory[pid][match.id]])
+            count++
         }
 
         def maxMatches = matchList.size();
@@ -303,7 +299,7 @@ class PlayerController {
                 goalsRatio[p.id] = goalsScored[p.id] / roundsPlayed[p.id]
                 goalsDiff[p.id] = goalsDiffed[p.id] / roundsPlayed[p.id]
             } else {
-                goalsRatio[p.id]  = 0
+                goalsRatio[p.id] = 0
                 goalsDiff[p.id] = 0
             }
         }
@@ -326,7 +322,7 @@ class PlayerController {
                     return goalsDiff[p2.id] <=> goalsDiff[p1.id]
                 }
             }
-        } else  {
+        } else {
             players = Player.list(params)
         }
         return [playerList: players, goalsRatio: goalsRatio, goalsDiff: goalsDiff]
