@@ -12,6 +12,7 @@
     <li>upgraded to grails 3.0.11</li>
     <li>correct logout action added </li>
     <li>new goal statistics added</li>
+    <li>fixed bug in elo graph</li>
 </ul>
 <h2>3.4</h2>
 <ul>
