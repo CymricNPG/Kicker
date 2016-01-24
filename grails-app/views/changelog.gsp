@@ -7,6 +7,16 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
+<h2>3.6</h2>
+<ul>
+    <li>Added TrueSkill under Player/Extended, based on the Java implementation: https://github.com/nsp/JSkills<br>
+    More Information:
+    <ul>
+        <li><a href="http://www.moserware.com/2010/03/computing-your-skill.html">Compute your skill</a></li>
+        <li><a href="http://trueskill.org/">TrueSkill</a></li>
+    </ul>
+    </li>
+</ul>
 <h2>3.5</h2>
 <ul>
     <li>upgraded to grails 3.0.11</li>

@@ -106,17 +106,18 @@ class PlayerController {
     }
 
     def sortPlayersAvgScore(order) {
-        def players = null
-        if (order == 'asc') {
-            players = Player.list().sort { p1, p2 ->
-                return p1.scoreAVG() <=> p2.scoreAVG()
-            }
-        } else {
-            players = Player.list().sort { p2, p1 ->
-                return p1.scoreAVG() <=> p2.scoreAVG()
+        return sortPlayersByFunc(order, { p -> p.scoreAVG() })
+    }
+
+    def sortPlayersByFunc(order, attribFunc) {
+
+        return Player.list().sort { p1, p2 ->
+            if (order == 'asc') {
+                return attribFunc(p1) <=> attribFunc(p2)
+            } else {
+                return attribFunc(p2) <=> attribFunc(p1)
             }
         }
-        return players
     }
 
     /**
@@ -303,29 +304,23 @@ class PlayerController {
                 goalsDiff[p.id] = 0
             }
         }
+        def ratings = scoreService.calcSkills()
         if (!params.order) {
             params.order = "desc"
         }
         if (params.sort == 'goals') {
-            players = Player.list().sort { p1, p2 ->
-                if (params.order == 'asc') {
-                    return goalsRatio[p1.id] <=> goalsRatio[p2.id]
-                } else {
-                    return goalsRatio[p2.id] <=> goalsRatio[p1.id]
-                }
-            }
+            players = sortPlayersByFunc(params.order, { p -> goalsRatio[p.id] })
         } else if (params.sort == 'diffs') {
-            players = Player.list().sort { p1, p2 ->
-                if (params.order == 'asc') {
-                    return goalsDiff[p1.id] <=> goalsDiff[p2.id]
-                } else {
-                    return goalsDiff[p2.id] <=> goalsDiff[p1.id]
-                }
-            }
+            players = sortPlayersByFunc(params.order, { p -> goalsDiff[p.id] })
+        } else if (params.sort == 'mean') {
+            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getMean() })
+        } else if (params.sort == 'deviation') {
+            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getStandardDeviation() })
         } else {
             players = Player.list(params)
         }
-        return [playerList: players, goalsRatio: goalsRatio, goalsDiff: goalsDiff]
+
+        return [playerList: players, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
     }
 
     def toInt01(value1, value2) {

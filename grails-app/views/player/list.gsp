@@ -16,6 +16,7 @@
                 <table class="normal">
                     <thead>
                         <tr>
+                             <th></th>
                         	<g:sortableColumn property="name" title="Name" />
                         	<g:sortableColumn property="score" title="Score" style="width: 40px" />
                         	<g:sortableColumn property="avgScore" title="avg. Score" style="width: 70px" />
@@ -29,6 +30,7 @@
                     <g:each in="${playerList}" status="i" var="player">
                     	<g:set var="nrOfMatches" value="${Math.max(player.totalMatches(), 1)}" />
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
+                            <td>${i+1}</td>
                         	<td><g:link action="show" id="${player.id}">${player.name?.encodeAsHTML()}</g:link></td>
                         	<g:if test="${nrOfMatches>4}">
                         	<td>${String.format("%d",player.score)}</td>

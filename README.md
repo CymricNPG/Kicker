@@ -2,7 +2,8 @@
 A simple Kicker Management Application with GRAILS
 
 
-A simple web frontend based on grails for managing hobby foosball (tabletop football) games without fixed teams. Provides a minimum frontends to enter games and calculate the players elo.
+A simple web frontend based on grails for managing hobby foosball (tabletop football) games without fixed teams. Provides
+a minimum frontend to enter games and calculate the players elo.
 
 
 You can:

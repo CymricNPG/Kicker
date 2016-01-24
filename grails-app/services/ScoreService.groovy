@@ -261,4 +261,33 @@ class ScoreService {
         result.eloHistory[pid][match.id] = result.playerElos[pid]
         //log.info "Match," + match.date.toString() + ",Player," + player.name.toString() + ",Fac," + fac + ",Elo," + result.playerElos[pid]
     }
+
+    def calcSkills() {
+        def players = [:]
+        def ratings = [:]
+        Player.list().each { player ->
+            players[player.id] = new jskills.Player<Long>(player.id)
+            ratings[player.id] = jskills.GameInfo.getDefaultGameInfo().getDefaultRating()
+        }
+        def gameInfo = jskills.GameInfo.getDefaultGameInfo();
+        Match.listOrderById().each { match ->
+            def team1 = new jskills.Team()
+            def team2 = new jskills.Team()
+            match.team1Players.each { p ->
+                team1.addPlayer(players[p.id], ratings[p.id])
+            }
+            match.team2Players.each { p ->
+                team2.addPlayer(players[p.id], ratings[p.id])
+            }
+            def teams = jskills.Team.concat(team1, team2)
+            def team1place = match.result >= 0 ? 1 : 2
+            def team2place = match.result <= 0 ? 1 : 2
+            def newRatingsWinLoseExpected = jskills.TrueSkillCalculator.calculateNewRatings(gameInfo, teams, team1place, team2place)
+            newRatingsWinLoseExpected.each{ player, rating ->
+                ratings[player.getId()] = rating
+            }
+        }
+        return ratings
+    }
+
 }

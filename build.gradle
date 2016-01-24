@@ -17,7 +17,7 @@ plugins {
     id "io.spring.dependency-management" version "0.5.4.RELEASE"
 }
 
-version "3.5"
+version "3.6"
 group "Kicker"
 
 apply plugin: "spring-boot"
@@ -27,6 +27,15 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
+
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'jskill/src/main/java'
+        }
+    }
+}
 
 ext {
     grailsVersion = project.grailsVersion
@@ -51,6 +60,7 @@ dependencyManagement {
 }
 
 dependencies {
+    compile group: 'org.ejml', name: 'simple', version: '0.29'
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-starter-actuator"
     compile "org.springframework.boot:spring-boot-autoconfigure"

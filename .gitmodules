@@ -1,0 +1,3 @@
+[submodule "jskill"]
+	path = jskill
+	url = https://github.com/nsp/JSkills.git
