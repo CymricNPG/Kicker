@@ -7,47 +7,36 @@ a minimum frontend to enter games and calculate the players elo.
 
 
 You can:
-- Enter new Player
-- Enter new Games
-- Show Highscore list
+- create players
+- enter games
+- show highscore based on elo calculation
 
 Prerequisite:
 -------------
 - jre 1.7 or 1.8 (http://www.java.com/)
-- jetty/tomcat/...
 
 Installation:
 -------------
 
 Standalone:
-- Checkout the distribution from github
+- checkout the latest release from github (https://github.com/CymricNPG/Kicker/releases)
 - start with: java -jar Kicker-<version>.jar
-- open with a web browser http://localhost:8080/
+- Kicker will create (or use) the database files in the same directory (named prodDb.*)
+- open with a web browser: http://localhost:8080/
 
 Grails installed (build your own war):
 - Checkout the distribution from github
-- use "grails war" and deploy it on a application server (http://grails.org/Deployment)
-
-Existing Servlet Container:
-- download latest war
-- rename it to Kicker.war
-- deploy it on a container e.g. tomcat
-  see http://grails.org/Deployment for more information, which containers are supported
-- Kicker.war uses as default database h2
-- Tomcat: You may increase the upload size, if installed with the Manager:
+- use "grails war" 
+- and deploy it on a application server (http://grails.org/Deployment)
+- Tomcat: You may need to increase the upload size, if you want to install it with the Tomcat-Manager:
   http://maxrohde.com/2011/04/27/large-war-file-cannot-be-deployed-in-tomcat-7/
+- Kicker.war uses as default the h2 database (more information at http://grails.org/doc/latest/guide/single.html#3.3%20The%20DataSource)
 
 Build:
 ------
 - Checkout with git: git clone https://github.com/CymricNPG/Kicker.git
-- "grails war" or "gradlew.bat -Dgrails.env=production assemble" (see more at http://grails.org/)
+- "gradlew.bat -Dgrails.env=production assemble" (see more at http://grails.org/)
 
-Database:
----------
-- Installation in a web container
-  - standard is a file based h2 database
-
-For more information look in http://grails.org/doc/latest/guide/single.html#3.3%20The%20DataSource
 
 License:
 --------
