@@ -56,4 +56,5 @@
         matchesLost(nullable:false)
         matchesDraw(nullable:false)
     }
+
 }

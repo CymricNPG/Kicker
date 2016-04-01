@@ -144,7 +144,7 @@ class MatchController {
             params.sort = "date"
             params.order = "desc";
         }
-        [matchList: Match.list(params)]
+        [matchList: Match.list(params),  maxMatches: Match.count()]
     }
 
     /**
