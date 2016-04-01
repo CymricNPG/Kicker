@@ -1,5 +1,3 @@
-import org.apache.commons.logging.LogFactory
-
 /**
  *   A simple foosball management application
  *   Copyright (C) 2015 Roland Spatzenegger
@@ -17,70 +15,16 @@ import org.apache.commons.logging.LogFactory
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see http://www.gnu.org/licenses/.
  */
+
+import org.apache.commons.logging.LogFactory
+
+
 class ScoreService {
 
     private static final log = LogFactory.getLog(this)
     boolean transactional = false
 
-    /**
-     * recalculates the elo and scores for all players and all matches
-     */
-    def recalcMatchScore() {
-        def players = Player.list()
-        players.each { player ->
-            player.elo = 1000
-            player.matchesWon = 0
-            player.matchesDraw = 0
-            player.matchesLost = 0
-            player.score = 0
-            player.save()
-        }
-        def results = Match.listOrderById()
-        results.each { match ->
-            calcElo(match)
-            match.save()
-        }
-    }
-
-    /**
-     * returns the elo of a player in a particular game without K Factor
-     * @reurn 0 if player wasnt part of the game
-     */
-
-    def returnElo(Match match, Player player) {
-        def elo = 0
-        match.team1Players.each { p ->
-            if (p.id == player.id) {
-                if (match.result > 0) {
-                    elo = 1 - match.elo
-                }
-                if (match.result == 0) {
-                    elo = 0.5 - match.elo
-                }
-                if (match.result < 0) {
-                    elo = 0.0 - match.elo
-                }
-            }
-        }
-        match.team2Players.each { p ->
-            if (p.id == player.id) {
-                if (match.result < 0) {
-                    elo = 1 - (1 - match.elo)
-                }
-                if (match.result == 0) {
-                    elo = 0.5 - (1 - match.elo)
-                }
-                if (match.result > 0) {
-                    elo = 0.0 - (1 - match.elo)
-                }
-            }
-        }
-        def matchFactor = calcMatchFactor(match.result)
-        return elo * matchFactor
-    }
-
-
-    def calcMatchFactor(matchresult) {
+    private def calcMatchFactor(matchresult) {
         // match factor (100% for draw, 75% for +/-1 matches (3 sets), 100% for +/-2 matches (2 sets)
         if (Math.abs(matchresult) == 0) {
             return 1
@@ -92,65 +36,21 @@ class ScoreService {
     }
 
     /**
-     * calculate the elo of a match. Inserts all calculated values in the match object
+     * calculate the elo of a match. Inserts all calculated values in the match object and updates player
      */
     def calcElo(match) {
-        def ra = 0.0
-        def rb = 0.0
-        def rac = 0
-        def rbc = 0
-        match.team1Players.each { p ->
-            ra += p.elo
-            rac++
-        }
-        match.team2Players.each { p ->
-            rb += p.elo
-            rbc++
-        }
-        // average of elos
-        if (rac > 0 && rbc > 0) {
-            ra = ra / (double) rac
-            rb = rb / (double) rbc
-            // the match elo
-            match.elo = 1 / (1 + Math.pow(10.0, (rb - ra) / 400.0))
-        }
+        def players = []
+        players.addAll(match.team1Players)
+        players.addAll(match.team2Players)
 
-        def matchFactor = calcMatchFactor(match.result)
+        def result = new ScoreResult(players)
+        calcElo(match, result)
 
-        /* calculate player scores */
-        match.team1Players.each { p ->
-            updateScore(match, match.elo, p, matchFactor, -11)
-            p.score += match.scoreTeam1
-            p.save()
-        }
-        match.team2Players.each { p ->
-            updateScore(match, 1.0 - match.elo, p, matchFactor, 1)
-            p.score += match.scoreTeam2
-            p.save()
-        }
+        match.elo = result.matchElos[match.id]
+        writePlayersBack(players, result)
     }
 
-    def updateScore(match, elo, player, matchFactor, side) {
-        def k = calcK(player)
-        k = k * matchFactor
-        def fac = 0.0
-        if (match.result * side < 0) {
-            player.matchesWon++
-            fac = k * (1.0 - match.elo)
-        }
-        if (match.result == 0) {
-            player.matchesDraw++
-            fac = +k * (0.5 - match.elo)
-        }
-        if (match.result * side > 0) {
-            player.matchesLost++
-            fac = k * (0.0 - match.elo)
-        }
-        player.elo += fac
-        log.info "Match," + match.date.toString() + ",Player," + player.name.toString() + ",Fac," + fac
-    }
-
-    def calcKGeneric(totalMatches, elo) {
+    private def calcKGeneric(totalMatches, elo) {
         if (totalMatches < 30) {
             return 25.0
         } else {
@@ -162,11 +62,18 @@ class ScoreService {
         }
     }
 
-    /**
-     * calculates the facor k for a player
-     */
-    def calcK(p) {
-        return calcKGeneric(p.matchesDraw + p.matchesWon + p.matchesLost, p.elo)
+    private def writePlayersBack(players, result) {
+        players.each { player ->
+            def pid = player.id
+            player.elo = result.playerElos[pid]
+            player.score = result.playerScores[pid]
+            player.matchesWon = result.matchesWon[pid]
+            player.matchesDraw = result.matchesDraw[pid]
+            player.matchesLost = result.matchesLost[pid]
+            player.mean = result.ratings[pid].getMean()
+            player.standardDeviation = result.ratings[pid].standardDeviation
+            player.save()
+        }
     }
 
     def recalcAndUpdateElo() {
@@ -175,27 +82,12 @@ class ScoreService {
             match.elo = result.matchElos[match.id]
             match.save()
         }
-        Player.list().each { player ->
-            player.elo = result.playerElos[player.id]
-            player.score = result.playerScores[player.id]
-            player.matchesWon = result.matchesWon[player.id]
-            player.matchesDraw = result.matchesDraw[player.id]
-            player.matchesLost = result.matchesLost[player.id]
-            player.save()
-        }
+        writePlayersBack(Player.list(), result)
     }
 
     // calculate all match and player elos, return as maps
     def recalculateElo() {
         def result = new ScoreResult()
-        Player.list().each { player ->
-            result.playerElos[player.id] = 1000.0
-            result.playerScores[player.id] = 0
-            result.matchesWon[player.id] = 0
-            result.matchesDraw[player.id] = 0
-            result.matchesLost[player.id] = 0
-            result.eloHistory[player.id] = [:]
-        }
         log.info("Start calculating elos")
         Match.listOrderById().each { match ->
             calcElo(match, result)
@@ -207,6 +99,9 @@ class ScoreService {
      * calculate the elo of a match. Inserts all calculated values in the match object
      */
     def calcElo(match, result) {
+
+        calcSkill(match, result)
+
         def ra = 0.0
         def rb = 0.0
         def rac = 0
@@ -263,31 +158,31 @@ class ScoreService {
     }
 
     def calcSkills() {
-        def players = [:]
-        def ratings = [:]
-        Player.list().each { player ->
-            players[player.id] = new jskills.Player<Long>(player.id)
-            ratings[player.id] = jskills.GameInfo.getDefaultGameInfo().getDefaultRating()
-        }
-        def gameInfo = jskills.GameInfo.getDefaultGameInfo();
+        def result = new ScoreResult()
         Match.listOrderById().each { match ->
-            def team1 = new jskills.Team()
-            def team2 = new jskills.Team()
-            match.team1Players.each { p ->
-                team1.addPlayer(players[p.id], ratings[p.id])
-            }
-            match.team2Players.each { p ->
-                team2.addPlayer(players[p.id], ratings[p.id])
-            }
-            def teams = jskills.Team.concat(team1, team2)
-            def team1place = match.result >= 0 ? 1 : 2
-            def team2place = match.result <= 0 ? 1 : 2
-            def newRatingsWinLoseExpected = jskills.TrueSkillCalculator.calculateNewRatings(gameInfo, teams, team1place, team2place)
-            newRatingsWinLoseExpected.each{ player, rating ->
-                ratings[player.getId()] = rating
-            }
+            calcSkill(match, result)
         }
-        return ratings
+        return result.ratings
+    }
+
+    def calcSkill(match, result) {
+        def gameInfo = jskills.GameInfo.getDefaultGameInfo();
+        def team1 = new jskills.Team()
+        def team2 = new jskills.Team()
+        match.team1Players.each { p ->
+            team1.addPlayer(result.skillPlayers[p.id], result.ratings[p.id])
+        }
+        match.team2Players.each { p ->
+            team2.addPlayer(result.skillPlayers[p.id], result.ratings[p.id])
+        }
+        def teams = jskills.Team.concat(team1, team2)
+        def team1place = match.result >= 0 ? 1 : 2
+        def team2place = match.result <= 0 ? 1 : 2
+        def newRatingsWinLoseExpected = jskills.TrueSkillCalculator.calculateNewRatings(gameInfo, teams, team1place, team2place)
+        newRatingsWinLoseExpected.each{ player, rating ->
+            result.ratings[player.getId()] = rating
+        }
+        result.matchQuality[match.id] = jskills.TrueSkillCalculator.calculateMatchQuality(gameInfo, teams)
     }
 
 }

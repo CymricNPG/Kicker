@@ -89,7 +89,7 @@ class PlayerController {
             params.max = 40
         }
         if (!params.sort) {
-            params.sort = "elo"
+            params.sort = "skill"
         }
         if (!params.order) {
             params.order = "desc"

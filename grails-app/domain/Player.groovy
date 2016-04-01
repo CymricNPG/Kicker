@@ -23,6 +23,8 @@
 	Integer score = 0
 	String password = ""
 	Double elo = 1000
+    Double mean
+    Double standardDeviation
 
 	def scoreAVG() {
 		def matches = totalMatches()
@@ -55,6 +57,8 @@
         matchesWon(nullable:false)
         matchesLost(nullable:false)
         matchesDraw(nullable:false)
+        mean(nullable: true)
+        standardDeviation(nullable: true)
     }
 
 }
