@@ -12,7 +12,7 @@ Kicker is a hobby foosball management application. You can manage your players a
 <p>In the main menu bar you have the following buttons:</p>
 <p>
 <table class="normal" border="1">
-<tr><td><span class="menuButton"><a class="home" href="${resource(dir:'')}">Home</a></span>
+<tr><td><span class="menuButton"><a class="home" href="${createLink(uri:'/index')}">Home</a></span>
 </td><td> This page.</td></tr>
 <tr><td><span class="menuButton"><g:link class="list" action="list" controller="player">Players</g:link></span>
 </td><td> Player management, high score list, add/edit/delete players, change your password.</td></tr>
@@ -33,7 +33,7 @@ Kicker is a hobby foosball management application. You can manage your players a
 Go to <g:link class="list" action="list" controller="player">Players</g:link> and create new players.
 Go to <g:link class="list" action="list" controller="match">Matches</g:link> and add a new match.
 
-<h1><g:link url="${resource(file:'changelog')}">Changelog</g:link></h1>
+<h1><g:link url="${createLink(uri:'/changelog')}">Changelog</g:link></h1>
 
 <h1>ELO</h1>
 The ELO is based on the <a href="https://en.wikipedia.org/wiki/Elo_rating_system">Elo rating system</a> with some slight modifications.
