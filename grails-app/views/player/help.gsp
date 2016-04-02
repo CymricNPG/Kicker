@@ -40,14 +40,13 @@
 		</table><p/>
 		Here you can enter the name of the player. If you click on the <span
 			class="menuButton"><g:link class="save" action="Create">Create</g:link></span>
-		Button the new player will be created with an empty password.
+		Button, the new player will be created.
 
 		<h2>Edit</h2>
 		The menu button <span class="menuButton"><g:link class="edit"
 			action="Edit">Edit</g:link></span> appears in <b>your</b> detailed player
 		view only if you're logged in.<br />
-		Here you can change your name and password. Be aware that you start
-		with an empty password.
+		Here you can change your name.
 		<h2>Delete</h2>
 		This menu button <span class="menuButton"><g:link
 			class="delete" action="Delete">Delete</g:link></span> appears in <b>your</b>

@@ -9,7 +9,6 @@
         <g:render template="/match/match_menu" />
         <div class="body">
             <g:render template="/match/match_list" />
-            If ELO is > 0.5, Team 1 was favorite.
         </div>
     </body>
 </html>

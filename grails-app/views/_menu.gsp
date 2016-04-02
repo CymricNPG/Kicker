@@ -13,7 +13,6 @@
 		<tr class="menu">
 			<td class="menusmall" >
 				<img style="width: 40px; height: 57px;" alt="x" src="${ resource(dir : 'images', file : 'start.png')}"></td>
-
 			<td
 				style="width: 90px; height: 47px;background-image: url(${ resource(dir : 'images', file : 'kicker_logo_line.png')})">
 			<img style="width: 90px; height: 47px;"
@@ -32,12 +31,11 @@
 			<td style="width: 90px; height: 47px;background-image: url(${ resource(dir : 'images', file : 'kicker_logo_line.png')})"><span class="menuButton"><g:link class="info"
 				controller="info">Info</g:link></span></td>
 			<td style="width: 90px; height: 47px;background-image: url(${ resource(dir : 'images', file : 'kicker_logo_line.png')})">
-			<g:if test="${session?.user?.name}">
+			<g:if test="${session?.user}">
 				<span class="menuButton"><g:link action="logout" controller="player" class="leave">Logout</g:link></span>
-				<span class="menuRight">User: ${session?.user?.name}</span>
 			</g:if>
 			<g:else>
-				<span class="menuButton"><g:link action="login"	controller="player" class="login">Login</g:link></span>
+				<span class="menuButton"><g:link action="admin"	controller="player" class="login">Admin</g:link></span>
 			</g:else></td>
 			<td class="menusmall">
 			<img style="width: 40px; height: 57px;" alt="x" src="${ resource(dir : 'images', file : 'finish.png')}"></td>

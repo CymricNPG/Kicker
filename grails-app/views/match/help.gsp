@@ -17,7 +17,7 @@
 </g:if>
 <h2>Match List</h2>
 The <span class="menuButton"><g:link class="list" action="list">Match List</g:link></span>
-button shows all matches, starting with the newest match.
+button shows all matches, starting with the newest match. If ELO is > 0.5, Team 1 was favorite. Quality shows ho well balanced a match was.
 <h2>New Match</h2>
 If you click on <span class="menuButton"><g:link class="create" action="create">New Match</g:link></span>
 in the menu bar, you can create a new match. The form has multiple fields,

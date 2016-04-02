@@ -33,13 +33,13 @@
                         <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
                             <td>${i+1}</td>
                         	<td><g:link action="show" id="${player.id}">${player.name?.encodeAsHTML()}</g:link></td>
-                         	<td>${String.format("%.0f",player.mean)}</td>
-                            <td>${String.format("%d",player.score)}</td>
+                         	<td>${String.format("%.0f",player.mean ?: 0.0)}</td>
+                            <td>${String.format("%d",player.score  ?: 0)}</td>
                             <td>${String.format("%.2f",player.scoreAVG())}</td>
-                            <td>${String.format("%.0f",player.elo)}</td>
-                            <td>${String.format("%.0f",player.matchesWon/nrOfMatches*100)}% </td>
-                            <td>${String.format("%.0f",player.matchesLost/nrOfMatches*100)}% </td>
-                            <td>${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}% </td>
+                            <td>${String.format("%.0f",player.elo  ?: 0.0)}</td>
+                            <td>${String.format("%.0f",player.matchesWon*100.0/nrOfMatches)}% </td>
+                            <td>${String.format("%.0f",player.matchesLost*100.0/nrOfMatches)}% </td>
+                            <td>${String.format("%.0f",player.matchesDraw*100.0/nrOfMatches)}% </td>
                         </tr>
                     </g:each>
                     </tbody>

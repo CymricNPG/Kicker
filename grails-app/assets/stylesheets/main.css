@@ -149,13 +149,13 @@ input:focus,select:focus,textarea:focus {
 }
 
 .menuButton a.leave {
-	background: url(../images/skin/leave.png) center left no-repeat;
+	background: url(../images/skin/exclamation.png) center left no-repeat;
 	color: #333;
 	padding-left: 25px;
 }
 
 .menuButton a.login {
-	background: url(../images/skin/login.png) center left no-repeat;
+	background: url(../images/skin/database_table.png) center left no-repeat;
 	color: #333;
 	padding-left: 25px;
 }
@@ -179,7 +179,7 @@ input:focus,select:focus,textarea:focus {
 }
 
 .menuButton a.calc {
-	background: url(../images/skin/calculator.png) center left no-repeat;
+	background: url(../images/skin/database_table.png) center left no-repeat;
 	color: #333;
 	padding-left: 25px;
 }

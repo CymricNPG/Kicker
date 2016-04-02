@@ -40,36 +40,17 @@
 		</tr>
 		<tr class="prop">
 			<td valign="top" class="name">Matches Draw:</td>
-			<g:if
-				test="${session?.user?.name && session?.user?.id?.equals(player?.id)}">
-				<td valign="top" class="value">${player.matchesDraw}</td>
-			</g:if>
-			<g:else>
-				<td valign="top" class="value">${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}%</td>
-			</g:else>
+			<td valign="top" class="value">${String.format("%.0f",player.matchesDraw/nrOfMatches*100)}%</td>
 		</tr>
 
 		<tr class="prop">
 			<td valign="top" class="name">Matches Lost:</td>
-			<g:if
-				test="${session?.user?.name && session?.user?.id?.equals(player?.id)}">
-				<td valign="top" class="value">${player.matchesLost}</td>
-			</g:if>
-			<g:else>
-				<td valign="top" class="value">${String.format("%.0f",player.matchesLost/nrOfMatches*100)}%</td>
-			</g:else>
+			<td valign="top" class="value">${String.format("%.0f",player.matchesLost/nrOfMatches*100)}%</td>
 		</tr>
 
 		<tr class="prop">
 			<td valign="top" class="name">Matches Won:</td>
-			<g:if
-				test="${session?.user?.name && session?.user?.id?.equals(player?.id)}">
-				<td valign="top" class="value">${player.matchesWon}</td>
-			</g:if>
-			<g:else>
-				<td valign="top" class="value">${String.format("%.0f",player.matchesWon/nrOfMatches*100)}%</td>
-			</g:else>
-
+			<td valign="top" class="value">${String.format("%.0f",player.matchesWon/nrOfMatches*100)}%</td>
 		</tr>
 
 
@@ -93,11 +74,11 @@
 <div class="buttons"><g:form controller="player">
 	<input type="hidden" name="id" value="${player?.id}" />
 	<g:if
-		test="${session?.user?.name && session?.user?.id?.equals(player?.id)}">
+		test="${session?.user}">
 		<span class="button"><g:actionSubmit class="edit" value="Edit" /></span>
 	</g:if>
 	<g:if
-		test="${session?.user?.name && session?.user?.id?.equals(player?.id)}">
+		test="${session?.user}">
 		<span class="button"><g:actionSubmit class="delete"
 			onclick="return confirm('Are you sure?');" value="Delete" /></span>
 	</g:if>

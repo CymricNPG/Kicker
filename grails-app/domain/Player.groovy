@@ -21,7 +21,7 @@
 	Integer matchesLost = 0
 	Integer matchesDraw = 0
 	Integer score = 0
-	String password = ""
+	String password = "" // needed for older installations
 	Double elo = 1000
     Double mean
     Double standardDeviation
@@ -29,7 +29,7 @@
 	def scoreAVG() {
 		def matches = totalMatches()
 		if(matches == 0) {
-			return 0
+			return 0.0
 		}
 		return score / matches
 	}

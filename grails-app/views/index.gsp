@@ -15,17 +15,15 @@ Kicker is a hobby foosball management application. You can manage your players a
 <tr><td><span class="menuButton"><a class="home" href="${createLink(uri:'/index')}">Home</a></span>
 </td><td> This page.</td></tr>
 <tr><td><span class="menuButton"><g:link class="list" action="list" controller="player">Players</g:link></span>
-</td><td> Player management, high score list, add/edit/delete players, change your password.</td></tr>
+</td><td> Player management, high score list, add/edit/delete players</td></tr>
 <tr><td><span class="menuButton"><g:link class="list" action="list" controller="match">Matches</g:link></span>
 </td><td> Match Management, add/edit/delete/list matches</td></tr>
 <tr><td><span class="menuButton"><g:link controller="info" class="info">Info</g:link></span>
 </td><td> License Info, applications internals</td></tr>
 <tr><td><span class="menuButton"><g:link action="logout" controller="player">Logout</g:link></span>
-</td><td> Logout if your logged in.</td></tr>
-<tr><td><span class="menuRight">User: ${session?.user?.name}</span>
-</td><td> If you're logged in your player-name is displayed here.</td></tr>
-<tr><td><span class="menuButton"><g:link action="login" controller="player">Login</g:link></span>
-</td><td> This activates some functions in the detailed player or match view. Everyone starts with an empty password.</td></tr>
+</td><td> Logout if your logged in as admin.</td></tr>
+<tr><td><span class="menuButton"><g:link action="admin" controller="player">Admin</g:link></span>
+</td><td> This activates some functions in the player or match view.</td></tr>
 </table>
 </p>
 <hr/>

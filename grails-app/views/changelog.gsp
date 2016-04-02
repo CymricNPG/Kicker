@@ -7,7 +7,14 @@
 <body>
 <div class="body">
 <h1>Changelog</h1>
-<h2>3.6</h2>
+	<h2>3.7</h2>
+	<ul>
+		<li>Update to Grails 3.1.4</li>
+		<li>Add TrueSkill fields to domain model. All data must be recalculated (Admin...Matches...Recalculate)</li>
+		<li>Replaced Login with Admin</li>
+		<li>Remove password from users</li>
+	</ul>
+	<h2>3.6</h2>
 <ul>
     <li>Added TrueSkill under Player/Extended, based on the Java implementation: https://github.com/nsp/JSkills<br>
     More Information:

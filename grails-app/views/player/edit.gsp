@@ -30,23 +30,7 @@
                                     <input type="text" id='name' name='name' value="${fieldValue(bean:player,field:'name')}"/>
                                 </td>
                             </tr> 
-                        
-                            <tr class='prop'>
-                                <td valign='top' class='password'>
-                                    <label for='password'>Password:</label>
-                                </td>
-                                <td valign='top' class='value ${hasErrors(bean:player,field:'password','errors')}'>
-                                    <input type='password' id='password' name='password' value="${fieldValue(bean:player,field:'password')}" />
-                                </td>
-                            </tr> 
-                        <tr class='prop'>
-                                <td valign='top' class='password'>
-                                    <label for='password'>Validate Password:</label>
-                                </td>
-                                <td valign='top' class='value ${hasErrors(bean:player,field:'password','errors')}'>
-                                    <input type='password' id='password' name='password2' value="${fieldValue(bean:player,field:'password')}" />
-                                </td>
-                            </tr> 
+
                         </tbody>
                     </table>
                 </div>

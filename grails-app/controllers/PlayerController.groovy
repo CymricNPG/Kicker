@@ -35,14 +35,16 @@ class PlayerController {
     def allowedMethods = [delete: 'POST', save: 'POST', update: 'POST']
 
     /**
-     * login a user
+     * Enter god mode
      */
 
-    def login = {
+    def admin = {
+        session.user = "nobody"
+        redirect(controller: 'match', action: 'list')
     }
 
     /**
-     * logout a logged in user
+     * leave god mode
      */
 
     def logout = {
@@ -62,25 +64,12 @@ class PlayerController {
     def checkUser() {
         if (!session.user) {
             // i.e. user not logged in
-            redirect(controller: 'player', action: 'login')
+            redirect(controller: 'player', action: 'list')
             return false
         }
+        return true
     }
 
-    def doLogin = {
-        def player = Player.findWhere(name: params['name'])
-        if (player?.password != null && params?.password != null && player.password.length() > 0
-                && params.password.length() > 0) {
-            if (player.password != params.password.encodeAsPassword()) {
-                player = null
-            }
-        }
-        session.user = player
-        if (player)
-            redirect(controller: 'match', action: 'list')
-        else
-            redirect(controller: 'player', action: 'login')
-    }
     /**
      * list all players
      */
@@ -89,7 +78,7 @@ class PlayerController {
             params.max = 40
         }
         if (!params.sort) {
-            params.sort = "skill"
+            params.sort = "mean"
         }
         if (!params.order) {
             params.order = "desc"
@@ -227,14 +216,10 @@ class PlayerController {
     def update = {
         def player = Player.get(params.id)
         if (player) {
-            if (!params?.password.equals(params?.password2)) {
-                player.errors.rejectValue('password', 'player.password.doesnotmatch')
-            }
             params.matchesWon = 0
             params.matchesLost = 0
             params.matchesDraw = 0
             player.properties = params
-            player.password = params.password.encodeAsPassword()
             if (!player.hasErrors() && player.save()) {
                 flash.message = "Player ${params.id} updated"
                 redirect(action: show, id: player.id)
