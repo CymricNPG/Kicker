@@ -53,12 +53,19 @@
 			<td valign="top" class="value">${String.format("%.0f",player.matchesWon/nrOfMatches*100)}%</td>
 		</tr>
 
-
 		<tr class="prop">
 			<td valign="top" class="name">Score:</td>
-
 			<td valign="top" class="value">${player.score}</td>
+		</tr>
 
+		<tr class="prop">
+			<td valign="top" class="name">Skill Mean:</td>
+			<td valign="top" class="value">${player.mean}</td>
+		</tr>
+
+		<tr class="prop">
+			<td valign="top" class="name">Skill standard deviation:</td>
+			<td valign="top" class="value">${player.standardDeviation}</td>
 		</tr>
 
 	</tbody>

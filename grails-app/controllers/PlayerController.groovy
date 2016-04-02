@@ -285,8 +285,8 @@ class PlayerController {
                 goalsRatio[p.id] = goalsScored[p.id] / roundsPlayed[p.id]
                 goalsDiff[p.id] = goalsDiffed[p.id] / roundsPlayed[p.id]
             } else {
-                goalsRatio[p.id] = 0
-                goalsDiff[p.id] = 0
+                goalsRatio[p.id] = 0.0
+                goalsDiff[p.id] = 0.0
             }
         }
         def ratings = scoreService.calcSkills()

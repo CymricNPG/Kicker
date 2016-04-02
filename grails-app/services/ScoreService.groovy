@@ -47,6 +47,7 @@ class ScoreService {
         calcElo(match, result)
 
         match.elo = result.matchElos[match.id]
+        match.matchQuality = result.matchQuality[match.id]
         writePlayersBack(players, result)
     }
 
@@ -80,6 +81,7 @@ class ScoreService {
         def result = recalculateElo()
         Match.list().each { match ->
             match.elo = result.matchElos[match.id]
+            match.matchQuality = result.matchQuality[match.id]
             match.save()
         }
         writePlayersBack(Player.list(), result)
@@ -100,7 +102,7 @@ class ScoreService {
      */
     def calcElo(match, result) {
 
-        calcSkill(match, result)
+        calcSkill(match, result) // hack
 
         def ra = 0.0
         def rb = 0.0

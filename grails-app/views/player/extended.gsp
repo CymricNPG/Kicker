@@ -32,8 +32,8 @@
                         	<td>${String.format("%.0f",player.elo)}</td>
                         	<td>${String.format("%.2f",goalsRatio[player.id])}</td>
                         	<td>${String.format("%.2f",goalsDiff[player.id])}</td>
-                        	<td>${String.format("%.2f",ratings[player.id].getMean())}</td>
-                        	<td>${String.format("%.2f",ratings[player.id].getStandardDeviation())}</td>
+                        	<td>${String.format("%.2f",ratings[player.id]?.getMean())}</td>
+                        	<td>${String.format("%.2f",ratings[player.id]?.getStandardDeviation())}</td>
                         </tr>
                     </g:each>
                     </tbody>

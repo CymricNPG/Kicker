@@ -18,8 +18,8 @@
 		</g:if>
 		<h2>Player List</h2>
 		The <span class="menuButton"><g:link class="list" action="list">Player List</g:link></span>
-		button shows all players. You can sort the table by ELO and score.
-		Click on the name or the ID to get more information about the player.
+		button shows all players. You can sort the table by different columns.
+		Click on the name to get more information about the player. Players with a &sigma; greater than 4 are marked in red.
 		<h2>New Player</h2>
 		If you click on <span class="menuButton"><g:link class="create"
 			action="create">New Player</g:link></span> in the menu bar you can create a
@@ -45,12 +45,12 @@
 		<h2>Edit</h2>
 		The menu button <span class="menuButton"><g:link class="edit"
 			action="Edit">Edit</g:link></span> appears in <b>your</b> detailed player
-		view only if you're logged in.<br />
+		view only if you're  in admin mode.<br />
 		Here you can change your name.
 		<h2>Delete</h2>
 		This menu button <span class="menuButton"><g:link
 			class="delete" action="Delete">Delete</g:link></span> appears in <b>your</b>
-		detailed player view only if you're logged in.<br />
+		detailed player view only if you're  in admin mode.<br />
 		You can delete your account.
 </div>
 </td>

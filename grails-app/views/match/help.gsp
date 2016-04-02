@@ -119,19 +119,19 @@ The team that wins two games wins the match. "Draw" (1:1, 2:2, ...) is not allow
 According to the colors above, the teams have to change sides in every game. 
 The first column shows the goals of team 1 (color blue), the second column is for team 2 (color red).			
 </p>
-<h2>Recalculate ELO</h2>
-This menu button <span class="menuButton"><g:link class="calc" action="recalc">Recalculate ELO</g:link></span> appears only if you're logged in.<br/>
-If you have deleted or edited a game, you must recalculate the ELO. This has to be done manually, because
+<h2>Recalculate Skill</h2>
+This menu button <span class="menuButton"><g:link class="calc" action="recalc">Recalculate Skill</g:link></span> appears only if you're in admin mode.<br/>
+If you have deleted or edited a game, you must recalculate the ELO/Skill. This has to be done manually, because
 the application checks all games and recalculates the ELO values for all players, which
 is a time and memory consuming task.
 <h2>Edit</h2>
 This menu button  <span class="menuButton"><g:link class="edit" action="Edit">Edit</g:link></span>
-appears only  if you're logged in.<br/>
+appears only  if you're in admin mode.<br/>
 If you have entered some wrong data before, you can change all values of a match. 
 In the "Match List" you have to select the match and then click on the Button "Edit" in the lower left corner.
 <h2>Delete</h2>
 This menu button <span class="menuButton"><g:link class="delete" action="Delete">Delete</g:link></span>
-appears only  if you're logged in.<br/>
+appears only  if you're  in admin mode.<br/>
 You can also delete a match. This is done similar to "Edit".
 </td></tr></table>
 </div>

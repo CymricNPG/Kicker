@@ -32,8 +32,7 @@
                         </g:else>
                     </g:each>
                 </td>
-                <td class="${match.win(2)}"><g:each in="${match.team2Players.sort { it.name }}"
-                                                    var="playerX">
+                <td class="${match.win(2)}"><g:each in="${match.team2Players.sort{it.name}}" var="playerX">
                     <g:if test="${playerX.id == player?.id}">
                         <div class="user">
                             <g:link controller="player" action="show" id="${playerX.id}"> ${playerX.name} </g:link>
