@@ -38,7 +38,11 @@ class ScoreResult {
             matchesDraw[player.id] = player.matchesDraw
             matchesLost[player.id] = player.matchesLost
             eloHistory[player.id] = [:]
-            ratings[player.id] = new jskills.Rating(player.mean, player.standardDeviation)
+            if(player.mean == null || player.standardDeviation == null) {
+                ratings[player.id] = jskills.GameInfo.getDefaultGameInfo().getDefaultRating()
+            } else {
+                ratings[player.id] = new jskills.Rating(player.mean, player.standardDeviation)
+            }
             skillPlayers[player.id] = new jskills.Player<Long>(player.id)
         }
     }
