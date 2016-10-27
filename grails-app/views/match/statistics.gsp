@@ -148,6 +148,56 @@
             </td>
         </tr>
     </table>
+    <table class="normal">
+        <tr>
+            <td>
+                <h1> Heros</h1>
+                <p/>
+                <table class="normal">
+                    <g:each in="${heroes}" status="i" var="player">
+                        <tr>
+                            <th>
+                                <g:link controller="player" action="show" id="${player.id}">
+                                    ${player.name}
+                                </g:link>
+                            </th>
+                        </tr>
+                    </g:each>
+                </table>
+                <table class="normal">
+                </table>
+            </td>
+            <td>
+                <h1> Losers</h1>
+                Lost a game with 0 goals.
+                <p/>
+                <table class="normal">
+                    <g:each in="${losers}" status="i" var="player">
+                        <tr>
+                            <th>
+                                <g:link controller="player" action="show" id="${player.id}">
+                                    ${player.name}
+                                </g:link>
+                            </th>
+                        </tr>
+                    </g:each>
+                </table>
+                <table class="normal">
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <H1>Matches</H1>
+                <p></p>
+                <g:each in="${hero_matches}" status="i" var="match">
+                    <g:link controller="match" action="show" id="${match.id}">
+                        ${match.date}
+                    </g:link>
+                </g:each>
+            </td>
+        </tr>
+    </table>
 
 </div>
 

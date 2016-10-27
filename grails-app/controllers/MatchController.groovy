@@ -58,6 +58,9 @@ class MatchController {
         //best partner statistics
         def partnersWon = [:]
         def partnersLost = [:]
+        def hero_matches = [] as Set
+        def heroes = [] as Set
+        def losers = [] as Set
 
         Match.list().each { match ->
 
@@ -75,12 +78,28 @@ class MatchController {
                 red++
                 if (match.team2Players.size() == 2) {
                     def id = getPartnerString(match.team2Players);
-                    partnersWon[id] = (partnersWon[id] ?:0 ) + 1;
+                    partnersWon[id] = (partnersWon[id] ?: 0) + 1;
                 }
                 if (match.team1Players.size() == 2) {
                     def id = getPartnerString(match.team1Players);
                     partnersLost[id] = (partnersLost[id] ?: 0) + 1;
                 }
+            }
+
+            if ((match.game1Team1 == 0 && match.game1Team2 > 0) ||
+                    (match.game2Team1 == 0 && match.game2Team2 > 0) ||
+                    (match.game3Team1 == 0 && match.game3Team2 > 0)) {
+                hero_matches.add(match)
+                heroes.addAll(match.team2Players)
+                losers.addAll(match.team1Players)
+            }
+
+            if ((match.game1Team1 > 0 && match.game1Team2 == 0) ||
+                    (match.game2Team1 > 0 && match.game2Team2 == 0) ||
+                    (match.game3Team1 > 0 && match.game3Team2 == 0)) {
+                hero_matches.add(match)
+                losers.addAll(match.team2Players)
+                heroes.addAll(match.team1Players)
             }
         }
         // now calc prop to win or loose with a certain partner...
@@ -113,9 +132,16 @@ class MatchController {
         def redPercent = redblue == 0 ? 0 : red * 100 / redblue
         def bluePercent = redblue == 0 ? 0 : blue * 100 / redblue
 
-        return [red          : redPercent, blue: bluePercent,
-                partnerArray : partnerArray, players: players,
-                partnersScore: partnersScore, minMatches: minMatches]
+        return [red          : redPercent,
+                blue         : bluePercent,
+                partnerArray : partnerArray,
+                players      : players,
+                partnersScore: partnersScore,
+                minMatches   : minMatches,
+                hero_matches : hero_matches.unique(),
+                losers       : losers.unique(),
+                heroes       : heroes.unique()
+        ]
     }
     /**
      * helper method for statistics
@@ -144,7 +170,7 @@ class MatchController {
             params.sort = "date"
             params.order = "desc";
         }
-        [matchList: Match.list(params),  maxMatches: Match.count()]
+        [matchList: Match.list(params), maxMatches: Match.count()]
     }
 
     /**
