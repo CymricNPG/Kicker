@@ -19,7 +19,7 @@
 							<td valign='top' bgcolor='lightblue'
 								class='${hasErrors(bean:match,field:'team1Players','errors')}'>
 
-							<g:select name="matchTeam1Players" from="${Player.listOrderByName()}"
+							<g:select name="matchTeam1Players" from="${Player.listOrderByName().findAll {!it.deactivated}}"
 								optionValue="name" optionKey="id" multiple="true"
 								value="${match?.team1Players?.id}" /></td>
 
@@ -28,7 +28,7 @@
 							(Startcolor red)</td>
 							<td valign='top' bgcolor='lightpink'
 								class='${hasErrors(bean:match,field:'team2Players','errors')}'>
-							<g:select name="matchTeam2Players" from="${Player.listOrderByName()}"
+							<g:select name="matchTeam2Players" from="${Player.listOrderByName().findAll {!it.deactivated}}"
 								optionValue="name" optionKey="id" multiple="true"
 								value="${match?.team2Players?.id}" /></td>
 						</tr>

@@ -1,4 +1,4 @@
-  
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -29,8 +29,15 @@
                                 <td valign='top' class='value ${hasErrors(bean:player,field:'name','errors')}'>
                                     <input type="text" id='name' name='name' value="${fieldValue(bean:player,field:'name')}"/>
                                 </td>
-                            </tr> 
-
+                            </tr>
+                            <tr class='prop'>
+                                <td valign='top' class='name'>
+                                    <label for='deactivated'>Deactivated:</label>
+                                </td>
+                                <td valign='top' class='value ${hasErrors(bean:player,field:'deactivated','errors')}'>
+                                    <g:checkBox name='deactivated' checked="${player?.deactivated}"/>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

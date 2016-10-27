@@ -91,7 +91,7 @@ class PlayerController {
         } else {
             players = Player.list(params)
         }
-        [playerList: players]
+        [playerList: players.findAll {!it.deactivated}]
     }
 
     def sortPlayersAvgScore(order) {
@@ -216,13 +216,14 @@ class PlayerController {
     def update = {
         def player = Player.get(params.id)
         if (player) {
+            log.info("Parameters:"+params)
             params.matchesWon = 0
             params.matchesLost = 0
             params.matchesDraw = 0
             player.properties = params
             if (!player.hasErrors() && player.save()) {
                 flash.message = "Player ${params.id} updated"
-                redirect(action: show, id: player.id)
+                redirect(action: 'show', id: player.id)
             } else {
                 render(view: 'edit', model: [player: player])
             }
@@ -305,7 +306,7 @@ class PlayerController {
             players = Player.list(params)
         }
 
-        return [playerList: players, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
+        return [playerList: players.findAll {!it.deactivated}, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
     }
 
     def toInt01(value1, value2) {
