@@ -160,14 +160,22 @@ class ScoreService {
     }
 
     def calcSkills() {
+        log.info("Start calculating skill")
         def result = new ScoreResult()
+        //def now = new Date()
+        //def last = now - 90
+        //log.info("start:" + now)
+        //log.info("end:" + last)
+        //Match.findAllByIdGreaterThan(1734, [sort: "id", order: "asc"]).each { match ->
         Match.listOrderById().each { match ->
             calcSkill(match, result)
         }
         return result.ratings
     }
 
+
     def calcSkill(match, result) {
+        //log.info("Calc match id:" + match.id)
         def gameInfo = jskills.GameInfo.getDefaultGameInfo();
         def team1 = new jskills.Team()
         def team2 = new jskills.Team()
@@ -181,7 +189,7 @@ class ScoreService {
         def team1place = match.result >= 0 ? 1 : 2
         def team2place = match.result <= 0 ? 1 : 2
         def newRatingsWinLoseExpected = jskills.TrueSkillCalculator.calculateNewRatings(gameInfo, teams, team1place, team2place)
-        newRatingsWinLoseExpected.each{ player, rating ->
+        newRatingsWinLoseExpected.each { player, rating ->
             result.ratings[player.getId()] = rating
         }
         result.matchQuality[match.id] = jskills.TrueSkillCalculator.calculateMatchQuality(gameInfo, teams)
