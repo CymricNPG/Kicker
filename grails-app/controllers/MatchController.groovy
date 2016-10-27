@@ -48,6 +48,14 @@ class MatchController {
      */
     def help = {}
 
+    def addMatch(map, player, match) {
+        def matches = []
+        if (map.containsKey(player)) {
+            matches = map[player]
+        }
+        matches.add(match)
+        map[player] = matches
+    }
     /**
      * shows player and match statistics
      */
@@ -58,9 +66,8 @@ class MatchController {
         //best partner statistics
         def partnersWon = [:]
         def partnersLost = [:]
-        def hero_matches = [] as Set
-        def heroes = [] as Set
-        def losers = [] as Set
+        def heroes = [:]
+        def losers = [:]
 
         Match.list().each { match ->
 
@@ -89,17 +96,15 @@ class MatchController {
             if ((match.game1Team1 == 0 && match.game1Team2 > 0) ||
                     (match.game2Team1 == 0 && match.game2Team2 > 0) ||
                     (match.game3Team1 == 0 && match.game3Team2 > 0)) {
-                hero_matches.add(match)
-                heroes.addAll(match.team2Players)
-                losers.addAll(match.team1Players)
+                match.team2Players.each { p -> addMatch(heroes, p, match) }
+                match.team1Players.each { p -> addMatch(losers, p, match) }
             }
 
             if ((match.game1Team1 > 0 && match.game1Team2 == 0) ||
                     (match.game2Team1 > 0 && match.game2Team2 == 0) ||
                     (match.game3Team1 > 0 && match.game3Team2 == 0)) {
-                hero_matches.add(match)
-                losers.addAll(match.team2Players)
-                heroes.addAll(match.team1Players)
+                match.team1Players.each { p -> addMatch(heroes, p, match) }
+                match.team2Players.each { p -> addMatch(losers, p, match) }
             }
         }
         // now calc prop to win or loose with a certain partner...
@@ -138,9 +143,8 @@ class MatchController {
                 players      : players,
                 partnersScore: partnersScore,
                 minMatches   : minMatches,
-                hero_matches : hero_matches.unique(),
-                losers       : losers.unique(),
-                heroes       : heroes.unique()
+                losers       : losers,
+                heroes       : heroes
         ]
     }
     /**
