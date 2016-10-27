@@ -112,11 +112,11 @@ class MatchController {
         def players = []
         def partnersScore = [:]
         def minMatches = 4
-        Player.listOrderByName().each { p1 ->
+        Player.listOrderByName().findAll {!it.deactivated}.each { p1 ->
             def line = []
             players << p1.id
 
-            Player.listOrderByName().each { p2 ->
+            Player.listOrderByName().findAll {!it.deactivated}.each { p2 ->
                 def id = p1.id + ":" + p2.id
                 //println id +"/"+partnersWon[id]+"/"+partnersLost[id]
                 def won = partnersWon[id] ?: 0

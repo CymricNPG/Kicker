@@ -154,7 +154,7 @@
                 <h1> Heros</h1>
                 <p/>
                 <table class="normal">
-                    <g:each in="${heroes.keySet()}" var="player">
+                    <g:each in="${heroes.keySet().findAll {!it.deactivated}}" var="player">
                         <tr>
                             <th>
                                 <g:link controller="player" action="show" id="${player.id}">
@@ -177,7 +177,7 @@
                 Lost a game with 0 goals.
                 <p/>
                 <table class="normal">
-                    <g:each in="${losers.keySet()}" var="player">
+                    <g:each in="${losers.keySet().findAll {!it.deactivated}}" var="player">
                         <tr>
                             <th>
                                 <g:link controller="player" action="show" id="${player.id}">
