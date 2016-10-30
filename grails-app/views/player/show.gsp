@@ -71,10 +71,11 @@
     </div>
     <p/>
     <div id="ELOChart">
-<!--    <gvisualization:lineCoreChart elementId="ELOChart" width="${600}" height="${125}"
-                                  columns="${[['number', 'Game'], ['number', 'ELO']] }" colors="${['76A4FB'] }"
-                              title="ELO History" data="${elos}"/>
-                                  -->
+        <gvisualization:lineCoreChart elementId="ELOChart" width="${600}" height="${125}"
+                                      columns="${[['number', 'Game'], ['number', 'Skill'], ['number', 'deviation'], ['number', 'deviation']] }"
+                                      colors="${['76A4FB', '76FFFF', '76FFFF'] }"
+                                      title="Skill History" data="${curve}"/>
+
     </div>
 
 

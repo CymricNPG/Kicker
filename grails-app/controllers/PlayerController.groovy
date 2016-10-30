@@ -198,14 +198,16 @@ class PlayerController {
             distinct("id")
             order("id", "asc")
         }.unique()
-        def result = scoreService.recalculateElo()
-        // calculate the elo history
-        elos.add([0, 1000])
-        def count = 1
-        matchList.each { match ->
-            elos.add([count, result.eloHistory[pid][match.id]])
+
+        def result = scoreService.recalcSkills()
+        def curve = []
+        def count = 0
+        result.skillHistory[pid]?.each { rating ->
+            def mean = rating.getMean()
+            curve.add([count, mean, mean - rating.getStandardDeviation(), mean + rating.getStandardDeviation()])
             count++
         }
+
 
         def maxMatches = matchList.size();
 
@@ -234,10 +236,9 @@ class PlayerController {
             hibSession.evict(match)
             retList.add(Match.get(match.id))
         }
-//	    println retList[0].team1Players
-//	    println retList[0].team2Players
 
-        return [player: p, elos: elos, matchList: retList, maxMatches: maxMatches]
+
+        return [player: p, curve: curve, matchList: retList, maxMatches: maxMatches]
     }
 
     def delete = {

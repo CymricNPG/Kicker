@@ -25,6 +25,7 @@ class ScoreResult {
             matchesDraw[player.id] = 0
             matchesLost[player.id] = 0
             eloHistory[player.id] = [:]
+            skillHistory[player.id] = []
             ratings[player.id] = jskills.GameInfo.getDefaultGameInfo().getDefaultRating()
             skillPlayers[player.id] = new jskills.Player<Long>(player.id)
         }
@@ -38,7 +39,8 @@ class ScoreResult {
             matchesDraw[player.id] = player.matchesDraw
             matchesLost[player.id] = player.matchesLost
             eloHistory[player.id] = [:]
-            if(player.mean == null || player.standardDeviation == null) {
+            skillHistory[player.id] = []
+            if (player.mean == null || player.standardDeviation == null) {
                 ratings[player.id] = jskills.GameInfo.getDefaultGameInfo().getDefaultRating()
             } else {
                 ratings[player.id] = new jskills.Rating(player.mean, player.standardDeviation)
@@ -57,4 +59,5 @@ class ScoreResult {
     def matchesDraw = [:]
     def matchesLost = [:]
     def eloHistory = [:]
+    def skillHistory = [:]
 }

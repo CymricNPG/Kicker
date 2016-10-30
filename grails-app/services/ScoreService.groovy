@@ -173,6 +173,13 @@ class ScoreService {
         return result.ratings
     }
 
+    def recalcSkills() {
+        def result = new ScoreResult()
+        Match.listOrderById().each { match ->
+            calcSkill(match, result)
+        }
+        return result
+    }
 
     def calcSkill(match, result) {
         //log.info("Calc match id:" + match.id)
@@ -190,7 +197,9 @@ class ScoreService {
         def team2place = match.result <= 0 ? 1 : 2
         def newRatingsWinLoseExpected = jskills.TrueSkillCalculator.calculateNewRatings(gameInfo, teams, team1place, team2place)
         newRatingsWinLoseExpected.each { player, rating ->
-            result.ratings[player.getId()] = rating
+            def pid = player.getId()
+            result.ratings[pid] = rating
+            result.skillHistory[pid].add(rating)
         }
         result.matchQuality[match.id] = jskills.TrueSkillCalculator.calculateMatchQuality(gameInfo, teams)
     }
