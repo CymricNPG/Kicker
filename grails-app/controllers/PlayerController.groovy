@@ -84,14 +84,64 @@ class PlayerController {
             params.order = "desc"
         }
         def players = null
-        if (params.sort == 'matchesWon' || params.sort == 'matchesLost' || params.sort == 'matchesDraw') {
+
+
+        def goalsScored = [:]
+        def goalsDiffed = [:]
+        def roundsPlayed = [:]
+        Match.list().each { match ->
+            def goals1 = (match.game1Team1 ?: 0) + (match.game2Team1 ?: 0) + (match.game3Team1 ?: 0)
+            def goals2 = (match.game1Team2 ?: 0) + (match.game2Team2 ?: 0) + (match.game3Team2 ?: 0)
+            def goalsDiff = goals1 - goals2
+            def rounds = toInt01(match.game1Team1, match.game1Team2) +
+                    toInt01(match.game2Team1, match.game2Team2) +
+                    toInt01(match.game3Team1, match.game3Team2)
+            match.team1Players.each { p ->
+                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals1
+                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
+                goalsDiffed[p.id] = (goalsDiffed[p.id] ?: 0) + goalsDiff
+            }
+            match.team2Players.each { p ->
+                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals2
+                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
+                goalsDiffed[p.id] = (goalsDiffed[p.id] ?: 0) - goalsDiff
+            }
+        }
+        // now calc prop to win or loose with a certain partner...
+        def goalsRatio = [:]
+        def goalsDiff = [:]
+        Player.list().each { p ->
+            if (goalsScored[p.id] != null) {
+                goalsRatio[p.id] = goalsScored[p.id] / roundsPlayed[p.id]
+                goalsDiff[p.id] = goalsDiffed[p.id] / roundsPlayed[p.id]
+            } else {
+                goalsRatio[p.id] = 0.0
+                goalsDiff[p.id] = 0.0
+            }
+        }
+        def ratings = scoreService.calcSkills()
+        if (!params.order) {
+            params.order = "desc"
+        }
+        if (params.sort == 'goals') {
+            players = sortPlayersByFunc(params.order, { p -> goalsRatio[p.id] })
+        } else if (params.sort == 'diffs') {
+            players = sortPlayersByFunc(params.order, { p -> goalsDiff[p.id] })
+        } else if (params.sort == 'mean') {
+            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getMean() })
+        } else if (params.sort == 'deviation') {
+            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getStandardDeviation() })
+        } else if (params.sort == 'matchesWon' || params.sort == 'matchesLost' || params.sort == 'matchesDraw') {
             players = sortPlayers(params.sort, params.order)
         } else if (params.sort == 'avgScore') {
             players = sortPlayersAvgScore(params.order)
         } else {
             players = Player.list(params)
         }
-        [playerList: players.findAll {!it.deactivated}]
+
+        [playerList  : players.findAll {
+            !it.deactivated
+        }, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
     }
 
     def sortPlayersAvgScore(order) {
@@ -216,7 +266,7 @@ class PlayerController {
     def update = {
         def player = Player.get(params.id)
         if (player) {
-            log.info("Parameters:"+params)
+            log.info("Parameters:" + params)
             params.matchesWon = 0
             params.matchesLost = 0
             params.matchesDraw = 0
@@ -253,61 +303,6 @@ class PlayerController {
         }
     }
 
-    def extended = {
-
-        def goalsScored = [:]
-        def goalsDiffed = [:]
-        def roundsPlayed = [:]
-        Match.list().each { match ->
-            def goals1 = (match.game1Team1 ?: 0) + (match.game2Team1 ?: 0) + (match.game3Team1 ?: 0)
-            def goals2 = (match.game1Team2 ?: 0) + (match.game2Team2 ?: 0) + (match.game3Team2 ?: 0)
-            def goalsDiff = goals1 - goals2
-            def rounds = toInt01(match.game1Team1, match.game1Team2) +
-                    toInt01(match.game2Team1, match.game2Team2) +
-                    toInt01(match.game3Team1, match.game3Team2)
-            match.team1Players.each { p ->
-                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals1
-                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
-                goalsDiffed[p.id] = (goalsDiffed[p.id] ?: 0) + goalsDiff
-            }
-            match.team2Players.each { p ->
-                goalsScored[p.id] = (goalsScored[p.id] ?: 0) + goals2
-                roundsPlayed[p.id] = (roundsPlayed[p.id] ?: 0) + rounds
-                goalsDiffed[p.id] = (goalsDiffed[p.id] ?: 0) - goalsDiff
-            }
-        }
-        // now calc prop to win or loose with a certain partner...
-        def players = []
-        def goalsRatio = [:]
-        def goalsDiff = [:]
-        Player.list().each { p ->
-            players << p
-            if (goalsScored[p.id] != null) {
-                goalsRatio[p.id] = goalsScored[p.id] / roundsPlayed[p.id]
-                goalsDiff[p.id] = goalsDiffed[p.id] / roundsPlayed[p.id]
-            } else {
-                goalsRatio[p.id] = 0.0
-                goalsDiff[p.id] = 0.0
-            }
-        }
-        def ratings = scoreService.calcSkills()
-        if (!params.order) {
-            params.order = "desc"
-        }
-        if (params.sort == 'goals') {
-            players = sortPlayersByFunc(params.order, { p -> goalsRatio[p.id] })
-        } else if (params.sort == 'diffs') {
-            players = sortPlayersByFunc(params.order, { p -> goalsDiff[p.id] })
-        } else if (params.sort == 'mean') {
-            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getMean() })
-        } else if (params.sort == 'deviation') {
-            players = sortPlayersByFunc(params.order, { p -> ratings[p.id].getStandardDeviation() })
-        } else {
-            players = Player.list(params)
-        }
-
-        return [playerList: players.findAll {!it.deactivated}, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
-    }
 
     def toInt01(value1, value2) {
         if (value1 != null && value1 > 0) {

@@ -46,10 +46,11 @@
         <table class="normal">
             <thead>
             <tr>
-                <th>Name</th>
+                <th style="white-space: nowrap">Name</th>
                 <g:each in="${players}" status="i" var="player">
-                    <th>
-                        <g:link controller="player" action="show" id="${player}"> ${Player.get(player)?.shortName()}
+                    <th style="white-space: nowrap">
+                        <g:link controller="player" action="show" id="${player}">
+                            ${Player.get(player)?.shortName()}
                         </g:link>
                     </th>
                 </g:each>
@@ -59,7 +60,7 @@
             <tbody>
             <g:each in="${partnerArray}" status="x" var="pline">
                 <tr>
-                    <td><b>
+                    <td style="white-space: nowrap"><b>
                         <g:link controller="player" action="show"
                                 id="${players[x]}">
                             ${Player.get(players[x])?.shortName()}
@@ -78,7 +79,7 @@
                             </g:if>
                         </td>
                     </g:each>
-                    <td><b>
+                    <td style="white-space: nowrap"><b>
                         <g:link controller="player" action="show"
                                 id="${players[x]}">
                             ${Player.get(players[x])?.shortName()}
@@ -101,13 +102,13 @@
                     <g:each in="${keys.reverse()}" status="i" var="key">
                         <g:if test="${partnersScore[key].toInteger()>0 && 5 > i}">
                             <tr>
-                                <th>
+                                <th style="white-space: nowrap">
                                     <g:set var="pids" value="${key.tokenize(':')}"/>
                                     <g:link controller="player" action="show" id="${pids[0]}">
                                         ${Player.get(pids[0]).name}
                                     </g:link>
                                 </th>
-                                <th>
+                                <th style="white-space: nowrap">
                                     <g:link controller="player" action="show" id="${pids[1]}">
                                         ${Player.get(pids[1]).name}
                                     </g:link>
@@ -128,14 +129,14 @@
                     <g:each in="${keys}" status="i" var="key">
                         <g:if test="${0>partnersScore[key] && 5 > i}">
                             <tr>
-                                <th>
+                                <th style="white-space: nowrap">
                                     <g:set var="pids" value="${key.tokenize(':')}"/>
                                     <g:link
                                             controller="player" action="show" id="${pids[0]}">
                                         ${Player.get(pids[0]).name}
                                     </g:link>
                                 </th>
-                                <th>
+                                <th style="white-space: nowrap">
                                     <g:link controller="player" action="show" id="${pids[1]}">
                                         ${Player.get(pids[1]).name}
                                     </g:link>
@@ -148,54 +149,47 @@
             </td>
         </tr>
     </table>
+    <h1>Heros</h1>
     <table class="normal">
-        <tr>
-            <td>
-                <h1> Heros</h1>
-                <p/>
-                <table class="normal">
-                    <g:each in="${heroes.keySet().findAll {!it.deactivated}}" var="player">
-                        <tr>
-                            <th>
-                                <g:link controller="player" action="show" id="${player.id}">
-                                    ${player.name}<p/>
-                                    <g:each in="${heroes[player]}" var="match">
-                                        <g:link controller="match" action="show" id="${match.id}">
-                                            ${match.date}
-                                        </g:link>
-                                    </g:each>
-                                </g:link>
-                            </th>
-                        </tr>
+        <g:each in="${heroes.keySet().findAll {!it.deactivated}}" var="player">
+            <tr>
+                <th style="white-space: nowrap">
+                    <g:link controller="player" action="show" id="${player.id}">
+                        ${player.name}
+                    </g:link>
+                </th>
+                <td>${heroes[player]?.size()}</td>
+                <td>
+                    <g:each in="${heroes[player]}" var="match">
+                        <g:link controller="match" action="show" id="${match.id}">
+                            ${match.date}
+                        </g:link>
                     </g:each>
-                </table>
-                <table class="normal">
-                </table>
-            </td>
-            <td>
-                <h1> Losers</h1>
-                Lost a game with 0 goals.
-                <p/>
-                <table class="normal">
-                    <g:each in="${losers.keySet().findAll {!it.deactivated}}" var="player">
-                        <tr>
-                            <th>
-                                <g:link controller="player" action="show" id="${player.id}">
-                                    ${player.name}<p/>
-                                    <g:each in="${losers[player]}" var="match">
-                                        <g:link controller="match" action="show" id="${match.id}">
-                                            ${match.date}
-                                        </g:link>
-                                    </g:each>
-                                </g:link>
-                            </th>
-                        </tr>
+                </td>
+            </tr>
+        </g:each>
+    </table>
+    <h1>Losers</h1>
+    Lost a game with 0 goals.
+    <table class="normal">
+        <g:each in="${losers.keySet().findAll {!it.deactivated}}" var="player">
+            <tr>
+                <th style="white-space: nowrap">
+                    <g:link controller="player" action="show" id="${player.id}">
+                        ${player.name}
+                    </g:link>
+                </th>
+                <td>${losers[player]?.size()}</td>
+                <td>
+                    <g:each in="${losers[player]}" var="match">
+                        <g:link controller="match" action="show" id="${match.id}">
+                            ${match.date}
+                        </g:link>
                     </g:each>
-                </table>
-                <table class="normal">
-                </table>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        </g:each>
+
     </table>
 
 </div>

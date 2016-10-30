@@ -27,10 +27,6 @@
                 <td valign="top" class="value">${player.name}</td>
             </tr>
             <tr class="prop">
-                <td valign="top" class="name">ELO:</td>
-                <td valign="top" class="value">${player.elo}</td>
-            </tr>
-            <tr class="prop">
                 <td valign="top" class="name">Average Score:</td>
                 <td valign="top" class="value">${player.scoreAVG()}</td>
             </tr>
@@ -62,25 +58,24 @@
                 <td valign="top" class="name">Skill Mean:</td>
                 <td valign="top" class="value">${player.mean}</td>
             </tr>
-
-            <tr class="prop">
-                <td valign="top" class="name">Deactivated:</td>
-                <td valign="top" class="value">${player.deactivated}</td>
-            </tr>
-
             <tr class="prop">
                 <td valign="top" class="name">Skill standard deviation:</td>
                 <td valign="top" class="value">${player.standardDeviation}</td>
             </tr>
-
+            <tr class="prop">
+                <td valign="top" class="name">Deactivated:</td>
+                <td valign="top" class="value">${player.deactivated}</td>
+            </tr>
             </tbody>
         </table>
     </div>
     <p/>
-    <gvisualization:lineCoreChart elementId="ELOChart" width="${600}" height="${125}"
+    <div id="ELOChart">
+<!--    <gvisualization:lineCoreChart elementId="ELOChart" width="${600}" height="${125}"
                                   columns="${[['number', 'Game'], ['number', 'ELO']] }" colors="${['76A4FB'] }"
-                                  title="ELO History" data="${elos}"/>
-    <div id="ELOChart"></div>
+                              title="ELO History" data="${elos}"/>
+                                  -->
+    </div>
 
 
     <div class="buttons">

@@ -10,7 +10,6 @@
             <th>Game 2</th>
             <th>Game 3</th>
             <g:sortableColumn property="matchQuality" title="Quality" />
-            <g:sortableColumn property="elo" title="ELO" />
         </tr>
         </thead>
         <tbody>
@@ -48,7 +47,6 @@
                 <td>${match.game2Team1}:${match.game2Team2}</td>
                 <td>${match.game3Team1}:${match.game3Team2}</td>
                 <td>${String.format("%.2f",match.matchQuality)}</td>
-                <td>${String.format("%.2f",match.elo)}</td>
             </tr>
         </g:each>
         </tbody>
