@@ -7,7 +7,7 @@
 <body>
 <div class="body">
     <h1>Changelog</h1>
-    <h3>3.9</h3>
+    <h2>3.9</h2>
     <ul>
         <li>Players can now be deactivated. There data will not be deleted, but in certain views they're no longer
             shown. In the player edit dialog a new deactivated option is added.
@@ -15,7 +15,7 @@
         <li> ELO is removed from all views.</li>
         <li>Under statistics a new report is added: Heroes/Losers</li>
     </ul>
-    <h3>3.8</h3>
+    <h2>3.8</h2>
     <ul>
         <li>Fixed a crash with new players.</li>
     </ul>
