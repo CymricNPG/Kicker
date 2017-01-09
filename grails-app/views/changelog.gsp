@@ -7,6 +7,12 @@
 <body>
 <div class="body">
     <h1>Changelog</h1>
+    <h2>3.10</h2>
+    <ul>
+        <li>Fixed a bug on new databases, database schema changed. Migration from 3.9 or earlier to 3.10 is not possible.
+        </li>
+        <li>Removed quick result</li>
+    </ul>
     <h2>3.9</h2>
     <ul>
         <li>Players can now be deactivated. There data will not be deleted, but in certain views they're no longer
