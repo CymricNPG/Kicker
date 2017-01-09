@@ -36,7 +36,7 @@
 				</table>
 				</td>
 			</tr>
-			<tr class='prop'>
+			<!-- <tr class='prop'>
 				<td valign='top' class='name'><label for='quickresults'>Quick
 				Result (games won):<br>
 				<br>
@@ -63,6 +63,7 @@
 
 				</td>
 			</tr>
+			-->
 			<tr class='prop'>
 				<td valign='top' class='name'><label for='results'>Result:</label>
 				</td>

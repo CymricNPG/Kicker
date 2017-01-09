@@ -17,8 +17,12 @@
  */
 class Match {
     static hasMany = [team1Players: Player, team2Players: Player]
-    Set team1Players
-    Set team2Players
+    //Set team1Players
+    //Set team2Players
+    static mapping = {
+        team1Players joinTable: [name: 'team1Players']
+        team2Players joinTable: [name: 'team2Players']
+    }
     Date date
     Double elo = 0
     Double matchQuality

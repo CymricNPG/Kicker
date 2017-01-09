@@ -308,8 +308,11 @@ class MatchController {
      * adds the team-members to a match
      */
     def addTeams(match, params) {
+        log.info params
         def matchTeam1Players = params.matchTeam1Players instanceof String ? [params.matchTeam1Players] : params.matchTeam1Players
         def matchTeam2Players = params.matchTeam2Players instanceof String ? [params.matchTeam2Players] : params.matchTeam2Players
+        log.info matchTeam1Players
+        log.info matchTeam2Players
         matchTeam1Players.each { r ->
             def p = Player.get(r)
             match.addToTeam1Players(p)
@@ -319,6 +322,7 @@ class MatchController {
             def p = Player.get(r)
             match.addToTeam2Players(p)
         }
+        log.info match
     }
     /**
      * saves a new match

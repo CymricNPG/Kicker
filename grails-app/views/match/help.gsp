@@ -59,11 +59,12 @@
                 The two teams have different colors: blue and red.
                 </p>
                 <p>
-                    At the end you have to enter the match result. Here you have two choices:
+                    At the end you have to enter the match result. <!-- Here you have two choices:
                     "Quick Result" or the exact "Result".<br/>
                     "Quick Result" is for people with poor memory, who can just type in how many games each side has
-                    won.
+                    won.-->
                 <p/>
+                <!--
                 <table class="normal" width="100">
                     <tbody>
                     <tr>
@@ -87,6 +88,7 @@
                 <p>
                     The more sophisticated way to enter the match result is to enter the exact numbers of goals.
                 <p/>
+                -->
                 <table class="normal" width="100">
                     <tbody>
                     <tr>
