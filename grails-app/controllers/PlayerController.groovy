@@ -16,6 +16,8 @@
  *   along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
+
+import grails.converters.JSON
 import org.hibernate.*
 import org.apache.commons.logging.LogFactory
 
@@ -139,9 +141,12 @@ class PlayerController {
             players = Player.list(params)
         }
 
-        [playerList  : players.findAll {
-            !it.deactivated
-        }, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]
+        def json_list = [players:players, ratings:ratings]
+        withFormat {
+            html {[playerList  : players.findAll {!it.deactivated}, goalsRatio: goalsRatio, goalsDiff: goalsDiff, ratings: ratings]}
+            json { render json_list as JSON }
+        }
+
     }
 
     def sortPlayersAvgScore(order) {
